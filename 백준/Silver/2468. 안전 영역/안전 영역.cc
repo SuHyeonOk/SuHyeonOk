@@ -1,7 +1,6 @@
 #include <iostream>
 #include <vector>
 #include <array>
-#include <queue>
 #include <algorithm>
 
 using namespace std;
@@ -12,45 +11,34 @@ int N{ 0 }, iCount{ 0 }, iMax{ 0 }, iHight{ 0 }, iTargetX{ 0 }, iTargetY{ 0 };
 vector<vector<int>> vec;
 vector<vector<bool>> visited;
 
-void BFS(const int _x, const int _y)
-{
-	array<int, 4> dx{ 0,0,-1,1 };
-	array<int, 4> dy{ -1,1,0,0 };
+array<int, 4> dx{ 0,0,-1,1 };
+array<int, 4> dy{ -1,1,0,0 };
 
-	queue<pair<int, int>> q;
-	q.push({ _x, _y });
+void DFS(const int _x, const int _y)
+{
 	visited[_x][_y] = true;
 
-	while (false == q.empty())
+	for (int i = 0; i < FOUR; i++)
 	{
-		int x = q.front().first;
-		int y = q.front().second;
-		q.pop();
+		int nx = _x + dx[i];
+		int ny = _y + dy[i];
 
-		for (int i = 0; i < FOUR; i++)
+		if (nx < 0 || nx >= N || ny < 0 || ny >= N)
 		{
-			int nx = x + dx[i];
-			int ny = y + dy[i];
-
-			if (nx < 0 || nx >= N || ny < 0 || ny >= N)
-			{
-				continue;
-			}
-
-			if (iHight >= vec[nx][ny])
-			{
-				continue;
-			}
-
-			if (false == visited[nx][ny])
-			{
-				visited[nx][ny] = true;
-				q.push({ nx, ny });
-			}
+			continue;
 		}
 
-	}
+		if (iHight >= vec[nx][ny])
+		{
+			continue;
+		}
 
+		if (visited[nx][ny] == false)
+		{
+			visited[nx][ny] = true;
+			DFS(nx, ny);
+		}
+	}
 }
 
 bool FIndGround()
@@ -102,7 +90,7 @@ int main()
 		else
 		{
 			iCount++;
-			BFS(iTargetX, iTargetY);
+			DFS(iTargetX, iTargetY);
 		}
 
 	}
