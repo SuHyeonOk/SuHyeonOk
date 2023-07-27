@@ -1,15 +1,15 @@
 #include <iostream>
-#include <vector>
 #include <array>
 #include <algorithm>
 
 using namespace std;
 
+#define MAX 100
 #define FOUR 4
 
 int N{ 0 }, iCount{ 0 }, iMax{ 0 }, iHight{ 0 }, iTargetX{ 0 }, iTargetY{ 0 };
-vector<vector<int>> vec;
-vector<vector<bool>> visited;
+array<array<int, MAX>, MAX> vec;
+array<array<bool, MAX>, MAX> visited;
 
 array<int, 4> dx{ 0,0,-1,1 };
 array<int, 4> dy{ -1,1,0,0 };
@@ -66,9 +66,6 @@ int main()
 
 	cin >> N;
 
-	vec.resize(N, vector<int>(N, 0));
-	visited.resize(N, vector<bool>(N, 0));
-
 	for (int x = 0; x < N; x++)
 	{
 		for (int y = 0; y < N; y++)
@@ -83,7 +80,7 @@ int main()
 		{
 			i++;
 			iHight = i;
-			fill(visited.begin(), visited.end(), vector<bool>(N, false));
+			visited = { {false} };
 			iMax = max(iMax, iCount);
 			iCount = 0;
 		}
