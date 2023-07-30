@@ -10,17 +10,16 @@ int main()
 	cin >> N;
 
 	vector<int> vec;
-	vec.reserve(N + 1);
+	vec.resize(N + 1, 0);
 
-	vec[1] = 0;
 	for (int i = 2; i <= N; i++)
 	{
 		vec[i] = vec[i - 1] + 1;
-		if (!(i % 3))
+		if (i % 3 == 0)
 		{
 			vec[i] = min(vec[i], vec[i / 3] + 1);
 		}
-		if (!(i % 2))
+		if (i % 2 == 0)
 		{
 			vec[i] = min(vec[i], vec[i / 2] + 1);
 		}
