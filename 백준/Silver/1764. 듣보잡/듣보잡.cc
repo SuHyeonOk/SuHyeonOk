@@ -1,5 +1,4 @@
 #include <iostream>
-#include <map>
 #include <vector>
 #include <algorithm>
 
@@ -11,27 +10,25 @@ int main()
 	cin >> N >> M;
 
 	string strInput{ "" };
-	map<string, int> name;
-	vector<string> result;
+	vector<string> vec, result;
+
 	for (int i = 0; i < N; i++)
 	{
 		cin >> strInput;
-		name.emplace(strInput, i);
+		vec.push_back(strInput);
 	}
 
+	sort(vec.begin(), vec.end());
 	for (int i = 0; i < M; i++)
 	{
 		cin >> strInput;
-
-		if (name.end() == name.find(strInput))
+		if (binary_search(vec.begin(), vec.end(), strInput))
 		{
-			continue;
+			result.push_back(strInput);
 		}
-		result.push_back(strInput);
 	}
 
 	sort(result.begin(), result.end());
-
 	int size = result.size();
 	cout << size << '\n';
 	for (int i = 0; i < size; i++)
