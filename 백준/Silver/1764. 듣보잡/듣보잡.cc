@@ -29,11 +29,10 @@ int main()
 	}
 
 	sort(result.begin(), result.end());
-	int size = result.size();
-	cout << size << '\n';
-	for (int i = 0; i < size; i++)
+	cout << result.size() << '\n';
+	for (auto it : result)
 	{
-		cout << result[i] << '\n';
+		cout << it << '\n';
 	}
 
 	return 0;
