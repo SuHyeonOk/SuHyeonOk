@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <array>
+#include <queue>
 #include <algorithm>
 using namespace std;
 
@@ -16,26 +17,36 @@ typedef  struct Coordinate
 }COD;
 
 array<int, MAX> dx{ 0, 0, -1, 1 }, dy{ -1, 1, 0,0 };
-void DFS(int _x, int _y)
+void BFS(int _x, int _y)
 {
-    for (size_t i = 0; i < MAX; i++)
+    queue<pair<int, int>> q;
+    q.push({ _x, _y });
+
+    while (false == q.empty())
     {
-        int x = _x + dx[i];
-        int y = _y + dy[i];
+        int qx = q.front().first;
+        int qy = q.front().second;
+        q.pop();
 
-        if (x < 0 || x >= M || y < 0 || y >= N)
+        for (size_t i = 0; i < MAX; i++)
         {
-            continue;
-        }
+            int x = qx + dx[i];
+            int y = qy + dy[i];
 
-        if (vec[x][y] == true)
-        {
-            continue;
-        }
+            if (x < 0 || x >= M || y < 0 || y >= N)
+            {
+                continue;
+            }
 
-        vec[x][y] = true;
-        ++iCount;
-        DFS(x, y);
+            if (vec[x][y] == true)
+            {
+                continue;
+            }
+
+            vec[x][y] = true;
+            ++iCount;
+            q.push({ x, y });
+        }
     }
 
 }
@@ -48,6 +59,7 @@ int main()
     cin >> M >> N >> K;
     vec.resize(M, vector<bool>(N, false));
 
+    // 모든 좌표 입력 받기
     COD cod;
     vector<COD> data(K, { 0, 0, 0, 0 });
     for (int i = 0; i < K; i++)
@@ -56,6 +68,7 @@ int main()
         data[i] = cod;
     }
 
+    // 입력 받은 좌표 채우기
     size_t size = data.size();
     for (size_t k = 0; k < size; k++)
     {
@@ -68,6 +81,7 @@ int main()
         }
     }
 
+    // 영역 개수, 영역의 넓이를 구하기 위해서 방문하지 않은 곳이 있는지 확인
     int iArea{ 0 };
     vector<int> result;
     for (int i = 0; i < M; i++)
@@ -79,12 +93,13 @@ int main()
                 ++iArea;
                 vec[i][j] = true;
                 iCount = 1;
-                DFS(i, j);
+                BFS(i, j);
                 result.push_back(iCount);
             }
         }
     }
 
+    // 모든 결과를 다 구하고 정리한 다음 출력
     sort(result.begin(), result.end());
 
     cout << iArea << '\n';
