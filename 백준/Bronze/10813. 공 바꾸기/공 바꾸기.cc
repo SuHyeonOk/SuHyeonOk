@@ -1,32 +1,32 @@
 #include <iostream>
-
+#include <vector>
 using namespace std;
 
-int n, m;
-int arr[101] = { 0, };
-int a, b;
+int main()
+{
+	int N{ 0 }, M{ 0 };
+	cin >> N >> M;
 
-void swap(int idx1, int idx2) {
-  int temp = arr[idx1];
-  arr[idx1] = arr[idx2];
-  arr[idx2] = temp;
-}
+	vector<int>  ns(N + 1);
+	for (int i = 1; i <= N; i++)
+	{
+		ns[i] = i;
+	}
 
-int main() {
-  cin >> n >> m;
+	int a{ 0 }, b{ 0 }, c{ 0 };
+	for (int i = 0; i < M; i++)
+	{
+		cin >> a >> b;
 
-  for(int i = 1; i <= n; i++) {
-    arr[i] = i;
-  }
+		c = ns[a];
+		ns[a] = ns[b];
+		ns[b] = c;
+	}
 
-  for(int i = 0; i < m; i++) {
-    cin >> a >> b;
-    swap(a, b); 
-  }
+	for (int i = 1; i <= N; i++)
+	{
+		cout << ns[i] << " ";
+	}
 
-  for(int i = 1; i <= n; i++) {
-    cout << arr[i] << ' ';
-  }
-
-  return 0;
+	return 0;
 }
