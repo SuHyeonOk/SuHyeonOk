@@ -11,11 +11,10 @@ int main()
 	{
 		cin >> H >> W >> N;
 
-
 		h = N % H; // 층
 		w = N / H; // 호
 		
-		h > 0 ? w++ : h = H;
+		h == 0 ? h = H : w++;
 
 		cout << h * 100 + w << '\n';
  	}
