@@ -5,7 +5,6 @@ using namespace std;
 
 int M{ 0 }, N{ 0 }, iDday{ 0 };
 vector<vector<int>> vec;
-vector<vector<int>> visited;
 vector<pair<int, int>> OnePos;
 vector<int> dx{ 0, 0, -1, 1 };
 vector<int> dy { -1, 1, 0, 0 };
@@ -37,16 +36,6 @@ void BFS()
 
 		if (iDday == qDday)
 		{
-			//for (int i = 0; i < N; i++)
-			//{
-			//	for (int j = 0; j < M; j++)
-			//	{
-			//		cout << visited[i][j] << " ";
-			//	}
-			//	cout << '\n';
-			//}
-			//cout << "***************************************" << iDday << '\n';
-
 			++iDday;
 		}
 
@@ -60,14 +49,11 @@ void BFS()
 				continue;
 			}
 
-			if (vec[nextX][nextY] == -1 || visited[nextX][nextY] != 0)
+			if (vec[nextX][nextY] == 0)
 			{
-				continue;
+				vec[nextX][nextY] = iDday;
+				q.push({ nextX , nextY, qDday + 1 });
 			}
-
-			visited[nextX][nextY] = iDday;
-			vec[nextX][nextY] = iDday;
-			q.push({ nextX , nextY, qDday + 1 });
 		}
 	}
 
@@ -93,7 +79,6 @@ int main()
 	cin >> M >> N;
 
 	vec.resize(N, vector<int>(M, 0));
-	visited.resize(N, vector<int>(M, 0));
 
 	for (int i = 0; i < N; i++)
 	{
@@ -104,22 +89,13 @@ int main()
 			if (vec[i][j] == 1)
 			{
 				OnePos.push_back({ i, j });
-				visited[i][j] = true;
 			}
 		}
 	}
 
 	BFS();
 
-	if (true == ZeroFine())
-	{
-		// 토마토를 다 익히지 못했을때
-		cout << -1;
-	}
-	else
-	{
-		cout << iDday - 1;
-	}
+	true == ZeroFine() ? cout << -1 : cout << iDday - 1;
 
 	return 0;
 }
