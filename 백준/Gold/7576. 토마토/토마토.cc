@@ -5,9 +5,8 @@ using namespace std;
 
 int M{ 0 }, N{ 0 }, iDday{ 0 };
 vector<vector<int>> vec;
-vector<pair<int, int>> OnePos;
 vector<int> dx{ 0, 0, -1, 1 };
-vector<int> dy { -1, 1, 0, 0 };
+vector<int> dy{ -1, 1, 0, 0 };
 
 typedef struct tagInfo
 {
@@ -16,17 +15,10 @@ typedef struct tagInfo
 	int Dday{ 0 };
 
 }INFO;
+queue<INFO> q;
 
 void BFS()
 {
-	queue<tagInfo> q;
-
-	size_t size = OnePos.size();
-	for (size_t i = 0; i < size; i++)
-	{
-		q.push({ OnePos[i].first, OnePos[i].second, iDday });
-	}
-
 	while (false == q.empty())
 	{
 		int qX{ q.front().x };
@@ -59,21 +51,6 @@ void BFS()
 
 }
 
-bool ZeroFine()
-{
-	for (int i = 0; i < N; i++)
-	{
-		for (int j = 0; j < M; j++)
-		{
-			if (vec[i][j] == 0)
-			{
-				return true;
-			}
-		}
-	}
-	return false;
-}
-
 int main()
 {
 	cin >> M >> N;
@@ -88,14 +65,26 @@ int main()
 
 			if (vec[i][j] == 1)
 			{
-				OnePos.push_back({ i, j });
+				q.push({ i, j, 0 });
 			}
 		}
 	}
 
 	BFS();
 
-	true == ZeroFine() ? cout << -1 : cout << iDday - 1;
+	for (int i = 0; i < N; i++)
+	{
+		for (int j = 0; j < M; j++)
+		{
+			if (vec[i][j] == 0)
+			{
+				cout << -1;
+				return 0;
+			}
+		}
+	}
+	
+	cout << iDday - 1;
 
 	return 0;
 }
