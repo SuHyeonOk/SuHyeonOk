@@ -3,7 +3,7 @@
 #include <algorithm>
 using namespace std;
 
-int N{ 0 }, r_g_b{ 0 }, rg_b{ 0 };
+int N{ 0 }, result{ 0 };
 vector<vector<char>> vec;
 vector<vector<bool>> visited;
 vector<int> dx{ 0, 0, -1, 1 };
@@ -90,16 +90,20 @@ int main()
 			if (false == visited[i][j])
 			{
 				current = vec[i][j];
-				++r_g_b;
+				++result;
 				R_G_B(i, j);
 			}
 		}
 	}
 
+	cout << result << " ";
+	result = 0;
+
 	for (int i = 0; i < N; i++)
 	{
 		fill(visited[i].begin(), visited[i].end(), false);
 	}
+
 
 	for (int i = 0; i < N; i++)
 	{
@@ -108,13 +112,13 @@ int main()
 			if (false == visited[i][j])
 			{
 				current = vec[i][j];
-				++rg_b;
+				++result;
 				RG_B(i, j);
 			}
 		}
 	}
 
-	cout << r_g_b << " " << rg_b;
+	cout << result;
 
 	return 0;
 }
