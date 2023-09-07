@@ -10,8 +10,7 @@ vector<int> dx{ 0, 0, -1, 1 };
 vector<int> dy{ -1, 1, 0, 0 };
 char current{ ' ' };
 
-// DFS
-void R_G_B(int _x, int _y)
+void DFS(int _x, int _y)
 {
 	for (int i = 0; i < 4; i++)
 	{
@@ -28,43 +27,7 @@ void R_G_B(int _x, int _y)
 		}
 
 		visited[nx][ny] = true;
-		R_G_B(nx, ny);
-	}
-}
-
-void RG_B(int _x, int _y)
-{
-	for (int i = 0; i < 4; i++)
-	{
-		int nx{ _x + dx[i] }, ny{ _y + dy[i] };
-
-		if (nx < 0 || nx >= N || ny < 0 || ny >= N)
-		{
-			continue;
-		}
-
-		if (true == visited[nx][ny])
-		{
-			continue;
-		}
-
-		if ('B' == current)
-		{
-			if (current == vec[nx][ny])
-			{
-				visited[nx][ny] = true;
-				RG_B(nx, ny);
-			}
-		}
-		else
-		{
-			if ('B' != vec[nx][ny])
-			{
-				visited[nx][ny] = true;
-				RG_B(nx, ny);
-			}
-		}
-
+		DFS(nx, ny);
 	}
 }
 
@@ -91,7 +54,7 @@ int main()
 			{
 				current = vec[i][j];
 				++result;
-				R_G_B(i, j);
+				DFS(i, j);
 			}
 		}
 	}
@@ -109,11 +72,22 @@ int main()
 	{
 		for (int j = 0; j < N; j++)
 		{
+			if ('G' == vec[i][j])
+			{
+				vec[i][j] = 'R';
+			}
+		}
+	}
+
+	for (int i = 0; i < N; i++)
+	{
+		for (int j = 0; j < N; j++)
+		{
 			if (false == visited[i][j])
 			{
 				current = vec[i][j];
 				++result;
-				RG_B(i, j);
+				DFS(i, j);
 			}
 		}
 	}
