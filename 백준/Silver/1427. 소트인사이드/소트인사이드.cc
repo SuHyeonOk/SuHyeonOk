@@ -1,5 +1,4 @@
 #include <iostream>
-#include <vector>
 #include <algorithm>
 using namespace std;
 
@@ -10,20 +9,8 @@ int main()
 
     string N{ 0 };
     cin >> N;
-
-    vector<int> vec;
-    size_t length = N.length();
-    for (size_t i = 0; i < length; i++)
-    {
-        vec.push_back(N[i] - '0');
-    }
-
-    sort(vec.rbegin(), vec.rend());
-
-    for (size_t i = 0; i < length; i++)
-    {
-        cout << vec[i];
-    }
+    sort(N.rbegin(), N.rend());
+    cout << N;
 
     return 0;
 }
