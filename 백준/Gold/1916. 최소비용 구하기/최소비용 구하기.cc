@@ -1,53 +1,72 @@
-#include <bits/stdc++.h>
-
+#include <iostream>
+#include <vector>
+#include <queue>
 using namespace std;
 
-#define INF 987654321
-using pii= pair<int, int>;
-vector<pii> vec[1001];
-vector<int> dist(1001, INF);
+#define MAX 987654321
 
-void dijkstra(int dept){
-    dist[dept] =0;
-    priority_queue<pii> pq;
-    pq.push({dist[dept], dept}); // 시작 weight, vertex
-    
-    while(!pq.empty()){
-        int cur = pq.top().second;
-        int distance = pq.top().first * -1; //현재까지 dept에서 cur 정점까지 가는 dist
-        pq.pop();
-        
-        if(dist[cur]<distance) continue; //이미 distance가 최소로 변경됨 
-        
-        
-        for(int i=0; i<vec[cur].size(); i++){
-            int nxt=vec[cur][i].first; //cur 정점과 연결된 정점들
-            int nxtdist = vec[cur][i].second + distance;
-            //현재까지 dept에서 cur정점까지의 최소 거리와 
-            //cur을 지나 nxt까지의 거리를 더한것 cur정점에서 nxt까지의 distance      
-            // e.g) 1 -> 4(cur) -> 5(nxt)
-            
-            if(nxtdist<dist[nxt]){//만약 cur을 지나가는 것이 더 가깝다면
-                dist[nxt]= nxtdist;
-                pq.push({nxtdist*-1, nxt});//새롭게 갱신된 weight와 vertex
-            }
-        }
-    }
+vector<vector<pair<int, int>>> vec;
+vector<int> distances;
+
+void Dijkstra(int _start)
+{
+	distances[_start] = 0;
+	priority_queue<pair<int, int>> pq;
+	pq.push({ distances[_start], _start });
+
+	while (false == pq.empty())
+	{
+		int current = pq.top().second;
+		int distance = pq.top().first * -1;
+		pq.pop();
+
+		if (distances[current] < distance)
+		{
+			// 이미 distance가 최소로 변경 됨 경우
+			continue;
+		}
+
+		size_t size = vec[current].size();
+		for (size_t i = 0; i < size; i++)
+		{
+			// 현재 도시와 연결된 정점들
+			int next = vec[current][i].first;
+			// 현재까지 시작에서 current까지 최소 거리와
+			// currrent를 지나 next까지 거리를 더한 distance
+			int nextdistance = vec[current][i].second + distance;
+
+			if (nextdistance < distances[next])
+			{
+				// 만약 현재 도시를 지나가는 것이 더 가깝다면
+				distances[next] = nextdistance;
+				pq.push({ nextdistance * -1, next });
+			}
+		}
+	}
+
 }
-int main(){
-    int N, M; cin>>N>>M;//도시의 개수, 버스의 개수
-    
-    while(M--){
-        int s, e, w; cin>>s>>e>>w;
-        vec[s].push_back({e, w});
-    }
-    
-    int dept, dest;
-    cin>>dept>>dest;
-    
-    dijkstra(dept);
-    
-    cout<<dist[dest];
-    
-    return 0;
+
+int main()
+{
+	ios::sync_with_stdio(false);
+	cin.tie(NULL); cout.tie(NULL);
+
+	int N{ 0 }, M{ 0 }, startCity{ 0 }, endCity{ 0 }, cost{ 0 };
+	cin >> N >> M;
+
+	vec.resize(N + 1);
+	distances.resize(N + 1, MAX);
+
+	for (int i = 0; i < M; i++)
+	{
+		cin >> startCity >> endCity >> cost;
+		vec[startCity].push_back({ endCity, cost });
+	}
+	cin >> startCity >> endCity;
+
+	Dijkstra(startCity);
+
+	cout << distances[endCity];
+
+	return 0;
 }
