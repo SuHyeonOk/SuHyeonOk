@@ -1,9 +1,10 @@
 #include <iostream>
 #include <vector>
 #include <queue>
+
 using namespace std;
 
-#define MAX 987654321
+#define MAX 2147483647
 
 vector<vector<pair<int, int>>> vec;
 vector<int> distances;
@@ -11,18 +12,18 @@ vector<int> distances;
 void Dijkstra(int _start)
 {
 	distances[_start] = 0;
-	priority_queue<pair<int, int>> pq;
+	queue<pair<int, int>> pq;
 	pq.push({ distances[_start], _start });
 
 	while (false == pq.empty())
 	{
-		int current = pq.top().second;
-		int distance = pq.top().first * -1;
+		int current = pq.front().second;
+		int distance = pq.front().first;
 		pq.pop();
 
 		if (distances[current] < distance)
 		{
-			// 이미 distance가 최소로 변경 됨 경우
+			// 이미 distance가 최소로 변경 된 경우
 			continue;
 		}
 
@@ -39,7 +40,7 @@ void Dijkstra(int _start)
 			{
 				// 만약 현재 도시를 지나가는 것이 더 가깝다면
 				distances[next] = nextdistance;
-				pq.push({ nextdistance * -1, next });
+				pq.push({ nextdistance, next });
 			}
 		}
 	}
@@ -56,7 +57,7 @@ int main()
 
 	vec.resize(N + 1);
 	distances.resize(N + 1, MAX);
-
+	
 	for (int i = 0; i < M; i++)
 	{
 		cin >> startCity >> endCity >> cost;
