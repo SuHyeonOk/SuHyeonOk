@@ -6,14 +6,14 @@ using namespace std;
 #define MAX 100000
 int nodeStart{ 0 }, nodeEnd{ 0 };
 int save[MAX + 1]{ false }; // 경로에 값을 저장
-int visited[MAX + 1]{ false }; // 방문 체크
+bool visited[MAX + 1]{ false }; // 방문 체크
 vector<int> vec;
 
 int BFS()
 {
 	visited[nodeStart] = true;
 
-	queue<pair<int,int>> q;
+	queue<pair<int, int>> q;
 	q.push({ nodeStart, 0 });
 
 	while (false == q.empty())
@@ -22,19 +22,17 @@ int BFS()
 		int time = q.front().second;
 		q.pop();
 
-		if (node == nodeEnd) 
+		if (node == nodeEnd)
 		{
-			int index = node;
-			while (index != nodeStart)
+			while (node != nodeStart)
 			{
-				vec.push_back(index);
-				index = save[index];
+				vec.push_back(node);
+				node = save[node];
 			}
 			vec.push_back(nodeStart);
 
 			return time;
 		}
-
 
 		if (node * 2 <= MAX && visited[node * 2] == false)
 		{
