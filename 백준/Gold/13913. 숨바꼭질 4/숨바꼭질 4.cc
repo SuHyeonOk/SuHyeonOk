@@ -5,16 +5,15 @@ using namespace std;
 
 #define MAX 100000
 int nodeStart{ 0 }, nodeEnd{ 0 };
-int save[MAX + 1]{ false }; // 경로에 값을 저장
+int save[MAX + 1]{ 0 }; // 경로에 값을 저장
 bool visited[MAX + 1]{ false }; // 방문 체크
 vector<int> vec;
 
 int BFS()
 {
-	visited[nodeStart] = true;
-
 	queue<pair<int, int>> q;
 	q.push({ nodeStart, 0 });
+	visited[nodeStart] = true;
 
 	while (false == q.empty())
 	{
