@@ -1,19 +1,20 @@
 #include <iostream>
-#include <vector>
 #include <queue>
+#include <algorithm>
 using namespace std;
 
 #define MAX 100000
 int nodeStart{ 0 }, nodeEnd{ 0 };
-int save[MAX + 1]{ 0 }; // 경로에 값을 저장
-bool visited[MAX + 1]{ false }; // 방문 체크
+int visited[MAX + 1];
 vector<int> vec;
 
 int BFS()
 {
+	fill(visited, visited + MAX + 1, -1);
+
 	queue<pair<int, int>> q;
 	q.push({ nodeStart, 0 });
-	visited[nodeStart] = true;
+	visited[nodeStart] = 1;
 
 	while (false == q.empty())
 	{
@@ -26,30 +27,27 @@ int BFS()
 			while (node != nodeStart)
 			{
 				vec.push_back(node);
-				node = save[node];
+				node = visited[node];
 			}
 			vec.push_back(nodeStart);
 
 			return time;
 		}
 
-		if (node * 2 <= MAX && visited[node * 2] == false)
+		if (node * 2 <= MAX && visited[node * 2] == -1)
 		{
 			q.push({ node * 2, time + 1 });
-			visited[node * 2] = true;
-			save[node * 2] = node;
+			visited[node * 2] = node;
 		}
-		if (node + 1 <= MAX && visited[node + 1] == false)
+		if (node + 1 <= MAX && visited[node + 1] == -1)
 		{
 			q.push({ node + 1, time + 1 });
-			visited[node + 1] = true;
-			save[node + 1] = node;
+			visited[node + 1] = node;
 		}
-		if (node - 1 >= 0 && visited[node - 1] == false)
+		if (node - 1 >= 0 && visited[node - 1] == -1)
 		{
 			q.push({ node - 1, time + 1 });
-			visited[node - 1] = true;
-			save[node - 1] = node;
+			visited[node - 1] = node;
 		}
 	}
 
@@ -65,7 +63,7 @@ int main()
 	cout << BFS() << '\n';
 
 	int size = vec.size() - 1;
-	for (int i = size; i >= 0; i--)
+	for (int i = size; i >= 0; i--) // 역으로 출력
 	{
 		cout << vec[i] << " ";
 	}
