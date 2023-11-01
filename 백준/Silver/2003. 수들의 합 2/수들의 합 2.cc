@@ -1,37 +1,55 @@
 #include <iostream>
-
 using namespace std;
+#define MAX 10000
 
-int n,m;
-int count = 0;
+int arr[MAX];
 
-int main() {
-    cin >> n >> m;
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
 
-    int a[n+1];
+    int N{ 0 }, M{ 0 };
+    cin >> N >> M;
 
-    for(int i=0;i<n;i++) {
-        cin >> a[i];
+    for (int i = 0; i < N; i++)
+    {
+        cin >> arr[i];
     }
 
-    int start=0,end=0;
-    int result = a[0];
+    int start{ 0 }, end{ 0 }, sum{ arr[0] }, answer{ 0 };
 
-    while(start<=end && end<n) {
-        if(result<m) {
-            result+=a[++end];
-        } else if(result==m) {
-            count++;
-            result+=a[++end];
-        } else if(result>m) {
-            result -=a[start++];
+    while (end < N)
+    {
+        if (sum < M)
+        {
+            ++end;
 
-            if(start>end) {
-                end = start;
-                result = a[start];
+            if (end < N)
+            {
+                sum += arr[end];
+            }
+        }
+        else if (sum > M)
+        {
+            sum -= arr[start];
+            ++start;
+        }
+        else if (sum == M)
+        {
+            sum -= arr[start];
+            ++start;
+            ++end;
+            ++answer;
+
+            if (end < N)
+            {
+                sum += arr[end];
             }
         }
     }
 
-    cout << count;
+    cout << answer;
+
+    return 0;
 }
