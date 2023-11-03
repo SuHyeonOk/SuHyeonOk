@@ -1,55 +1,59 @@
 #include <iostream>
 #include <algorithm>
-#include <queue>
-#include <cstring>
-
-typedef long long ll;
-
 using namespace std;
+#define MAX 100000
 
-ll arr[100001];
+int arr[MAX];
 
-int main() {
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
 
-	ios::sync_with_stdio(0);
-	cin.tie(0);
+    int N{ 0 }, M{ 0 }, sum{ 0 }, arrMax{ 0 };
+    cin >> N >> M;
 
-	ll N, M; // N은 레슨의 수, M은 블루레이의 갯수
-	cin >> N >> M;
+    for (int i = 0; i < N; i++)
+    {
+        cin >> arr[i];
+        sum += arr[i];
+        arrMax = max(arrMax, arr[i]);
+    }
 
-	ll sum = 0, low = -1;
+    int left{ arrMax }, right{ sum };
 
-	for(int i = 0; i < N; i++) {
-		cin >> arr[i];
-		sum += arr[i];
-		low = max(low, arr[i]);
-	}
+    while (left <= right)
+    {
+        int mid = (left + right) * 0.5;
+        int tempSum{ 0 }, tempM{ 0 };
 
-	ll high = sum;
+        for (int i = 0; i < N; i++)
+        {
+            if (tempSum + arr[i] > mid)
+            {
+                tempSum = 0;
+                ++tempM;
+            }
+            tempSum += arr[i];
+        }
 
-	while (low <= high) {
-		ll cnt = 0, tempSum = 0;
-		ll mid = (low + high) / 2;
+        if (tempSum != 0)
+        {
+            ++tempM;
+        }
 
-		for (int i = 0; i < N; i++) {
-			if (tempSum + arr[i] > mid) {
-				tempSum = 0;
-				cnt += 1; // 블루레이 갯수 1 증가
-			}
-			tempSum += arr[i];
-		}
-		if (tempSum != 0) cnt += 1;
-		// 블루레이 크기로 가정한 mid보다 작아서 1 증가시키지 못했을 경우
+        if (tempM <= M)
+        {
+            right = mid - 1;
+        }
+        else
+        {
+            left = mid + 1;
+        }
 
-		// 갯수가 M 이하일 때는, high 값을 줄여본다.
-		if (cnt <= M) {
-			high = mid - 1;
-		}
-		else {
-			low = mid + 1;
-		}
-	}
+    }
 
-	cout << low;	
-	return 0;
+    cout << left;
+
+    return 0;
 }
