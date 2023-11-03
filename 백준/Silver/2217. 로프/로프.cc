@@ -1,26 +1,31 @@
 #include <iostream>
 #include <algorithm>
 using namespace std;
-int n;
-//1<=n<=100000
-int input[100000];
-int answer;
-int main() {
+#define MAX 100000
 
-	ios::sync_with_stdio(false);
-	cin.tie(0);
-	cout.tie(0);
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
 
-	cin >> n;
-	for (int i = 0; i < n; i++) {
-		cin >> input[i];
-	}
-	sort(input, input + n);
-	for (int i = 0; i < n; i++) {
-		answer = max(answer, (n - i)*input[i]);
-	}
-	cout << answer;
+    int N{ 0 };
+    cin >> N;
 
+    int arr[MAX];
+    for (int i = 0; i < N; i++)
+    {
+        cin >> arr[i];
+    }
 
-	return 0;
+    sort(arr, arr + N);
+
+    int result{ 0 };
+    for (int i = 0; i < N; i++)
+    {
+        result = max(result, (N - i) * arr[i]);
+    }
+
+    cout << result;
+
+    return 0;
 }
