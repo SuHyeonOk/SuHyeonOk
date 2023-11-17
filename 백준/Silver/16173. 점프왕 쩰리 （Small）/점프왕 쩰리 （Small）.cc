@@ -1,53 +1,43 @@
 #include <iostream>
-#include <queue>
 using namespace std;
 #define MAX 3
 
 int g_N{ 0 };
 int g_arr[MAX][MAX];
-int g_visited[MAX][MAX];
+bool g_visited[MAX][MAX];
+bool g_end{ false };
 
-bool BFS()
+void DFS(int _x, int _y)
 {
-    queue<pair<int, int>> q;
-    q.push({ 0, 0 });
+    int move{ g_arr[_y][_x] };
+    int dx[2]{ 0, move };
+    int dy[2]{ move, 0 };
 
-    while (false == q.empty())
+    for (int i = 0; i < 2; i++)
     {
-        int x{ q.front().first };
-        int y{ q.front().second };
-        q.pop();
+        int nx{ dx[i] + _x };
+        int ny{ dy[i] + _y };
 
-        int move{ g_arr[y][x] };
-        int dx[2]{ 0, move };
-        int dy[2]{ move, 0 };
-
-        for (int i = 0; i < 2; i++)
+        if (nx >= g_N || nx < 0 || ny >= g_N || ny < 0)
         {
-            int nx{ dx[i] + x };
-            int ny{ dy[i] + y };
-
-            if (nx >= g_N || nx < 0 || ny >= g_N || ny < 0)
-            {
-                continue;
-            }
-
-            if (true == g_visited[ny][nx])
-            {
-                continue;
-            }
-
-            if (-1 == g_arr[ny][nx])
-            {
-                return true;
-            }
-
-            g_visited[ny][nx] = true;
-            q.push({ nx, ny });
+            continue;
         }
+
+        if (true == g_visited[ny][nx])
+        {
+            continue;
+        }
+
+        if (-1 == g_arr[ny][nx])
+        {
+            g_end = true;
+        }
+
+        g_visited[ny][nx] = true;
+        DFS(nx, ny);
+        g_visited[ny][nx] = false;
     }
 
-    return false;
 }
 
 int main()
@@ -65,7 +55,9 @@ int main()
         }
     }
 
-    if (true == BFS())
+    DFS(0, 0);
+
+    if (true == g_end)
     {
         cout << "HaruHaru";
     }
