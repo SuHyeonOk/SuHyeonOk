@@ -1,24 +1,30 @@
 #include <iostream>
+#include<cmath>
 using namespace std;
 
-int main(int argc, char* argv[])
+int main()
 {
-	int x, y;
+    ios::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
 
-	while (1) {
-		cin >> x >> y;
+    int one{ 0 }, two{ 0 };
+    
+    while (cin >> one >> two)
+    {
+        if (one == 0 && two == 0)
+        {
+            break;
+        }
 
-		if (x == 0 && y == 0) {
-			break;
-		}
+        if (one > two)
+        {
+            cout << "Yes" << '\n';
+        }
+        else
+        {
+            cout << "No" << '\n';
+        }
+    }
 
-		if (x > y) {
-			cout << "Yes" << endl;
-		}
-		else {
-			cout << "No" << endl;
-		}
-	}
-
-	return 0;
+    return 0;
 }
