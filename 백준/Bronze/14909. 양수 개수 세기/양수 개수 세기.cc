@@ -1,18 +1,28 @@
 #include <iostream>
-#include <cstdio>
-
+#include<cmath>
 using namespace std;
 
-int main(void) {
-	ios_base::sync_with_stdio(0);
-	cin.tie(0);
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
 
-	int n = 0;
-	int cnt = 0;
-	while (scanf("%d", &n) != EOF) {
-		if (n > 0) cnt++;
-	}
+    int n{ 0 }, count{ 0 };
 
-	cout << cnt;
+    while (cin >> n)
+    {
+        if (cin.eof() == true)
+        {
+            break;
+        }
 
+        if (n > 0)
+        {
+            ++count;
+        }
+    }
+
+    cout << count;
+
+    return 0;
 }
