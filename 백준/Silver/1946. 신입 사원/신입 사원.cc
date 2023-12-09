@@ -8,7 +8,8 @@ int main()
     ios::sync_with_stdio(false);
     cin.tie(NULL); cout.tie(NULL);
 
-    vector<pair<int, int>> vec;
+    //vector<pair<int, int>> vec;
+    pair<int, int> vec[100000];
     int T{ 0 };
     cin >> T;
 
@@ -17,15 +18,16 @@ int main()
         int N{ 0 };
         cin >> N;
 
-        vec.clear();
-        vec.resize(N);
+        //vec.clear();
+        //vec.resize(N);
 
         for (int i = 0; i < N; i++) // 모든 점수 입력 받기
         {
             cin >> vec[i].first >> vec[i].second;
         }
 
-        sort(vec.begin(), vec.end()); // 서류 등수 순서로 정렬
+        //sort(vec.begin(), vec.end()); // 서류 등수 순서로 정렬
+        sort(vec, vec+N);
 
         int result{ 1 }; // 신입  사원은 1명 이상 즉, 1등은 반드시 존재 하기에 1부터 센다.
         int bsetScore{ vec[0].second }; // 서류 1등의 면접 등수
