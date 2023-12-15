@@ -3,43 +3,39 @@
 #include <algorithm>
 using namespace std;
 
-
 int main()
 {
-    ios::sync_with_stdio(false);
-    cin.tie(NULL); cout.tie(NULL);
+	long long n, m;
+	cin >> n >> m;
 
-    long long n{ 0 }, m{ 0 };
-    cin >> n >> m;
+	vector<int> vec(n);
+	for (long long i = 0; i < n; i++) 
+	{
+		cin >> vec[i];
+	}
+	sort(vec.begin(), vec.end());
 
-    vector<int> vec(n);
-    for (long long i = 0; i < n; i++)
-    {
-        cin >> vec[i];
-    }
+	long long left{ 1 }, right{ vec[n - 1] * m }, mid{ 0 }, count{ 0 };
 
-    sort(vec.begin(), vec.end());
+	while (left <= right)
+	{
+		mid = (left + right) / 2;
+		count = 0;
 
-	long long start = 1, end = vec.back() * m;
+		for (long long i = 0; i < n; i++)
+		{
+			count += mid / vec[i];
 
-	while (start <= end) {
-		long long mid = (start + end) / 2;
-		long long cnt = 0;
-
-		for (long long i = 0; i < n; i++) {
-			cnt += mid / vec[i];
-			if (cnt > m)
+			if (count > m)
 				break;
 		}
 
-		if (cnt >= m) { // 충분하므로 시간을 줄여야한다.
-			end = mid - 1;
+		if (count >= m) { // 충분하므로 시간을 줄여야한다.
+			right = mid - 1;
 		}
 		else {
-			start = mid + 1;
+			left = mid + 1;
 		}
 	}
-	cout << start;
-
-    return 0;
+	cout << left;
 }
