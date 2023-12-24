@@ -1,30 +1,34 @@
 #include <iostream>
-#include <cstring>
 #include <string>
-#include <algorithm>
 #include <vector>
+#include <algorithm>
 using namespace std;
 
-int main(int argc, char* argv[])
+int main()
 {
-	string s;
-	string temp;
-	vector<string> v;
+    ios::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
 
-	cin >> s;
+    string s{ "" };
+    cin >> s;
 
-	for (int i = 0; i < s.length(); ++i) 
+    vector<string>vec;
+    size_t size{ s.size() };
+    string temp{ "" };
+    temp.resize(size);
+
+    for (size_t i = 0; i < size; i++)
     {
-		temp = s.substr(i, s.length() - i);
-		v.push_back(temp);
-	}
+        string temp = s.substr(i, size);;
+        vec.push_back(temp);
+    }
 
-	sort(v.begin(), v.end());
+    sort(vec.begin(), vec.end());
 
-	for (int i = 0; i < v.size(); ++i) 
+    for (size_t i = 0; i < size; i++)
     {
-		cout << v[i] << endl;
-	}
+        cout << vec[i] << '\n';
+    }
 
-	return 0;
+    return 0;
 }
