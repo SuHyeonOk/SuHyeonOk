@@ -1,6 +1,5 @@
 #include <iostream>
 #include <map>
-#include <algorithm>
 using namespace std;
 
 string arr[1000];
@@ -13,6 +12,7 @@ int main()
     size_t n{ 0 };
     cin >> n;
 
+    int max_value{ 1 };
     string input{ "" };
     map<string, int> m;
     for (size_t i = 0; i < n; i++)
@@ -27,15 +27,11 @@ int main()
         else // 같은 값이 있는 경우
         {
             ++it->second;
-        }
-    }
 
-    int max_value{ 0 };
-    for (map<string, int>::iterator it = m.begin(); it != m.end(); ++it)
-    {
-        if (max_value < it->second)
-        {
-            max_value = it->second;
+            if (max_value < it->second)
+            {
+                max_value = it->second;
+            }
         }
     }
 
