@@ -1,25 +1,27 @@
 #include <iostream>
 #include <algorithm>
 using namespace std;
+#define MAX 10
 
-int main() 
+int main()
 {
-	int testcase{ 0 };
-    cin >> testcase;
-    
-	int arr[10];
-    
-	for (int j = 0; j < testcase; j++) 
+    ios::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
+
+    int t{ 0 };
+    cin >> t;
+
+    int arr[MAX]{ 0, };
+    while (t--)
     {
-		for (int i = 0; i < 10; i++) 
+        for (int i = 0; i < MAX; i++)
         {
-			cin >> arr[i];
-		}
-        
-		sort(arr, arr + 10);
+            cin >> arr[i];
+        }
 
-		cout << arr[7] << endl;
-	}
+        sort(arr, arr + MAX);
+        cout << arr[7] << '\n';
+    }
 
-	return 0;
+    return 0;
 }
