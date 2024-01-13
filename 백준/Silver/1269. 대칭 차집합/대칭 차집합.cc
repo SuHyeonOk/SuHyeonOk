@@ -1,5 +1,5 @@
 #include <iostream>
-#include <map>
+#include <set>
 using namespace std;
 
 int main()
@@ -11,27 +11,22 @@ int main()
     cin >> A >> B;
 
     int input{ 0 };
-    map<int, bool> m;
+    set<int> s;
     for (int i = 0; i < A; i++)
     {
         cin >> input;
-        m.emplace(input, false);
+        s.insert(input);
     }
 
     int Symmetry{ 0 };
     for (int i = 0; i < B; i++)
     {
         cin >> input;
-        map<int, bool>::iterator it = m.find(input);
+        set<int>::iterator it = s.find(input);
 
-        if (it == m.end()) // 없다.
-        {
-            m.emplace(input, false);
-        }
-        else // 있다.
+        if (it != s.end()) // 이미 있는 경우
         {
             ++Symmetry;
-            m[input] = true;
         }
     }
 
