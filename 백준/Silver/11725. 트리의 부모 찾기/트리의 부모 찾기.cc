@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <queue>
 #define MAX 100001
 using namespace std;
 
@@ -10,18 +11,28 @@ int result[MAX];
 
 void DFS(int _node)
 {
+    queue<int> q;
+    q.push(_node);
     visited[_node] = true;
 
-    size_t size = vec[_node].size();
-    for (size_t i = 0; i < size; i++)
+    while (false == q.empty())
     {
-        int next = vec[_node][i];
-        if (false == visited[next])
+        int CurrentNode = q.front();
+        q.pop();
+        
+        size_t size = vec[CurrentNode].size();
+        for (size_t i = 0; i < size; i++)
         {
-            result[next] = _node;
-            DFS(next);
+            int Next = vec[CurrentNode][i];
+            if (false == visited[Next])
+            {
+                result[Next] = CurrentNode;
+                visited[Next] = true;
+                q.push(Next);
+            }
         }
     }
+
 }
 
 int main()
