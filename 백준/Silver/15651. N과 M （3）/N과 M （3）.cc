@@ -1,36 +1,36 @@
 #include <iostream>
-#include <vector>
-#define MAX 9
+#define MAX 8
 using namespace std;
 
-int N{ 0 }, M{ 0 };
-vector<int> vec(MAX, 0);
+int N, M;
+int num[MAX];
 
-void DFS(int _count)
+void DFS(int _depth)
 {
-    // 목표 M까지 도달 했다면
-    if (_count == M)
+    if (_depth == M)
     {
         for (int i = 0; i < M; i++)
         {
-            cout << vec[i] << ' ';
+            cout << num[i] << " ";
         }
         cout << '\n';
-
         return;
     }
 
-    // 목표에 도달하지 못 했다면
     for (int i = 1; i <= N; i++)
     {
-        vec[_count] = i;
-        DFS(_count + 1); // M까지 들어간다.
+        num[_depth] = i;
+        DFS(_depth + 1);
     }
 }
 
-int main() 
+int main()
 {
+    ios::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
+
     cin >> N >> M;
+
     DFS(0);
 
     return 0;
