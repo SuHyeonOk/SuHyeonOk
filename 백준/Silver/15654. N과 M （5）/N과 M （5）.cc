@@ -3,50 +3,52 @@
 #include <algorithm>
 using namespace std;
 
-#define MAX 10000
-int N{ 0 }, M{ 0 };
-vector<int> ns;
-vector<int> vec(MAX, 0);
-vector<bool> visited(MAX, false);
+int N, M;
+vector<int> vec;
+vector<int> num;
+vector<bool> visited;
 
-void DFS(int _count)
+void DFS(int _depth)
 {
-    // 목표 M까지 도달 했다면
-    if (_count == M)
+    if (M == _depth)
     {
         for (int i = 0; i < M; i++)
         {
-            cout << vec[i] << ' ';
+            cout << num[i] << ' ';
         }
         cout << '\n';
-
         return;
     }
 
-    // 목표에 도달하지 못 했다면
     for (int i = 0; i < N; i++)
     {
-        if (false == visited[ns[i]])
+        if (false == visited[i])
         {
-            visited[ns[i]] = true;
-            vec[_count] = ns[i];
-            DFS(_count + 1); // M까지 들어간다.
-            visited[ns[i]] = false;
+            visited[i] = true;
+            num[_depth] = vec[i];
+            DFS(_depth + 1);
+            visited[i] = false;
         }
     }
 }
 
 int main()
 {
+    ios::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
+
     cin >> N >> M;
 
-    ns.resize(N);
+    vec.resize(N);
+    num.resize(N);
+    visited.resize(N);
+
     for (int i = 0; i < N; i++)
     {
-        cin >> ns[i];
+        cin >> vec[i];
     }
-    sort(ns.begin(), ns.end());
 
+    sort(vec.begin(), vec.end());
     DFS(0);
 
     return 0;
