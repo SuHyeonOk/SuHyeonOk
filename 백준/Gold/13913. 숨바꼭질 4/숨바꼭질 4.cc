@@ -1,53 +1,61 @@
 #include <iostream>
 #include <queue>
-#include <algorithm>
+#include <vector>
+#include <cstring>
+#define MAX 100001
 using namespace std;
 
-#define MAX 100000
-int nodeStart{ 0 }, nodeEnd{ 0 };
-int visited[MAX + 1];
-vector<int> vec;
+int N{ 0 }, K{ 0 };
+int visited[MAX];
 
-int BFS()
+void BFS()
 {
-	fill(visited, visited + MAX + 1, -1);
-
+	memset(visited, -1, sizeof(visited));
 	queue<pair<int, int>> q;
-	q.push({ nodeStart, 0 });
-	visited[nodeStart] = 1;
+	q.push({ N, 0 });
+	visited[N] = N;
 
 	while (false == q.empty())
 	{
-		int node = q.front().first;
-		int time = q.front().second;
+		int X = q.front().first;
+		int Time = q.front().second;
 		q.pop();
 
-		if (node == nodeEnd)
+		if (X == K)
 		{
-			while (node != nodeStart)
+			cout << Time << '\n';
+
+			vector<int> vec;
+			while (X != N)
 			{
-				vec.push_back(node);
-				node = visited[node];
+				vec.push_back(X);
+				X = visited[X];
 			}
-			vec.push_back(nodeStart);
+			vec.push_back(X);
 
-			return time;
+			int size = vec.size() - 1;
+			for (int i = size; i >= 0; i--)
+			{
+				cout << vec[i] << " ";
+			}
+
+			break;
 		}
 
-		if (node * 2 <= MAX && visited[node * 2] == -1)
+		if (X * 2 <= MAX && visited[X * 2] == -1)
 		{
-			q.push({ node * 2, time + 1 });
-			visited[node * 2] = node;
+			visited[X * 2] = X;
+			q.push({ X * 2, Time + 1 });
 		}
-		if (node + 1 <= MAX && visited[node + 1] == -1)
+		if (X + 1 <= MAX && visited[X + 1] == -1)
 		{
-			q.push({ node + 1, time + 1 });
-			visited[node + 1] = node;
+			visited[X + 1] = X;
+			q.push({ X + 1, Time + 1 });
 		}
-		if (node - 1 >= 0 && visited[node - 1] == -1)
+		if (X - 1 >= 0 && visited[X - 1] == -1)
 		{
-			q.push({ node - 1, time + 1 });
-			visited[node - 1] = node;
+			visited[X - 1] = X;
+			q.push({ X - 1, Time + 1 });
 		}
 	}
 
@@ -58,15 +66,9 @@ int main()
 	ios::sync_with_stdio(false);
 	cin.tie(NULL); cout.tie(NULL);
 
-	cin >> nodeStart >> nodeEnd;
+	cin >> N >> K;
 
-	cout << BFS() << '\n';
-
-	int size = vec.size() - 1;
-	for (int i = size; i >= 0; i--) // 역으로 출력
-	{
-		cout << vec[i] << " ";
-	}
+	BFS();
 
 	return 0;
 }
