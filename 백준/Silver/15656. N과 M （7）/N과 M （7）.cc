@@ -1,33 +1,47 @@
 #include <iostream>
+#include <vector>
 #include <algorithm>
-
+#define MAX 7
 using namespace std;
-#define MAX 9
 
-int N,M;
-int first[MAX];
-int arr[MAX];
+int N, M;
+int result[MAX];
+vector<int> num;
 
-void dfs(int k) { //현재 위치
-    if(k==M) { //목표인 M까지 도달했다면
-        for(auto i =0;i<M;i++)
-            cout << arr[i] << " "; //arr에 저장한 값 M개 만큼 출력
-        cout << "\n";
-    }else { //목표에 도달하지 않았다면
-        for(auto i=0; i<N;i++) {
-            arr[k]=first[i]; // 정렬한 N값을 arr에 저장
-            dfs(k+1); //더 깊게 들어가자. (M까지)
+void DFS(int _depth)
+{
+    if (_depth == M)
+    {
+        for (int i = 0; i < M; i++)
+        {
+            cout << result[i] << ' ';
         }
+        cout << '\n';
+        return;
+    }
+
+    for (int i = 0; i < N; i++)
+    {
+        result[_depth] = num[i];
+        DFS(_depth + 1);
     }
 }
 
-int main() {
+int main()
+{
+    ios::sync_with_stdio(false); 
+    cin.tie(NULL); cout.tie(NULL);
+
     cin >> N >> M;
 
-    for(int i=0;i<N;i++)
-        cin >> first[i];
-    
-    sort(first,first+N); //정렬
+    num.resize(N);
+    for (int i = 0; i < N; i++)
+    {
+        cin >> num[i];
+    }
 
-    dfs(0);
+    sort(num.begin(), num.end());
+    DFS(0);
+
+    return 0;
 }
