@@ -2,24 +2,6 @@
 #define MAX 3
 using namespace std;
 
-bool SameAngle(int _a, int _b, int _c)
-{
-    if (_a == _b)
-    {
-        return true;
-    }
-    else if (_a == _c)
-    {
-        return true;
-    }
-    else if (_c == _b)
-    {
-        return true;
-    }
-
-    return false;
-}
-
 int main()
 {
     ios::sync_with_stdio(false);
@@ -39,7 +21,7 @@ int main()
     
     if (arr[0] + arr[1] + arr[2] == 180) // 세 각의 합이 180이고
     {
-        if (true == SameAngle(arr[0], arr[1], arr[2])) // 두 각이 같은 경우
+        if (arr[0] == arr[1] || arr[0] == arr[2] || arr[1] == arr[2]) // 두 각이 같은 경우
         {
             cout << "Isosceles";
         }
