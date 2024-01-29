@@ -1,39 +1,44 @@
 #include <iostream>
+#include <set>
 #include <vector>
 #include <algorithm>
-
 using namespace std;
 
 int main()
 {
-	int N{ 0 }, M{ 0 };
-	cin >> N >> M;
+    ios::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
 
-	string strInput{ "" };
-	vector<string> vec, result;
+    int N = 0, M = 0;
+    cin >> N >> M;
 
-	for (int i = 0; i < N; i++)
-	{
-		cin >> strInput;
-		vec.push_back(strInput);
-	}
+    string str = "";
+    set<string> s;
+    for (int i = 0; i < N; i++)
+    {
+        cin >> str;
+        s.insert(str);
+    }
 
-	sort(vec.begin(), vec.end());
-	for (int i = 0; i < M; i++)
-	{
-		cin >> strInput;
-		if (binary_search(vec.begin(), vec.end(), strInput))
-		{
-			result.push_back(strInput);
-		}
-	}
+    vector<string> vec;
+    for (int i = 0; i < M; i++)
+    {
+        cin >> str;
 
-	sort(result.begin(), result.end());
-	cout << result.size() << '\n';
-	for (auto it : result)
-	{
-		cout << it << '\n';
-	}
+        set<string>::iterator it = s.find(str);
+        if (it != s.end()) // 같은 값 있음
+        {
+            vec.push_back(it->c_str());
+        }
+    }
 
-	return 0;
+    size_t size = vec.size();
+    cout << size << '\n';
+    sort(vec.begin(), vec.end());
+    for (size_t i = 0; i < size; i++)
+    {
+        cout << vec[i] << '\n';
+    }
+
+    return 0;
 }
