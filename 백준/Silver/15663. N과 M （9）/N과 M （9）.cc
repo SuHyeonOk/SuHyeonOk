@@ -1,45 +1,55 @@
-#include <stdio.h>
+#include <iostream>
+#include <vector>
 #include <algorithm>
+#define MAX 8
 using namespace std;
 
-int n,m;
+int N, M;
+int num[MAX];
+bool visited[MAX];
+vector<int> vec;
 
-int arr[10];
-int num[10];
-int check[10];
-
-void seq(int len){
-    if(len==m){
-        for(int i=0;i<m;i++)
-            printf("%d ",arr[i]);
-        printf("\n");
+void DFS(int _depth)
+{
+    if (M == _depth)
+    {
+        for (int i = 0; i < M; i++)
+        {
+            cout << vec[num[i]] << ' ';
+        }
+        cout << '\n';
         return;
     }
 
-    int last = 0;
-
-    for(int i=0;i<n;i++){
-        if(check[i]==0 && num[i]!=last){
-            arr[len] = num[i];
-            last = arr[len];
-            check[i] = 1;
-            seq(len+1);
-            check[i] = 0;
+    int temp = 0;
+    for (int i = 0; i < N; i++)
+    {
+        if (false == visited[i] && temp != vec[i])
+        {
+            num[_depth] = i;
+            temp = vec[i];
+            visited[i] = true;
+            DFS(_depth + 1);
+            visited[i] = false;
         }
     }
-
-    return;
 }
 
-int main(){
-    scanf("%d %d",&n,&m);
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
 
-    for(int i=0;i<n;i++)
-        scanf("%d",&num[i]);
+    cin >> N >> M;
 
-    sort(num,num+n);
+    vec.resize(N);
+    for (int i = 0; i < N; i++)
+    {
+        cin >> vec[i];
+    }
 
-    seq(0);
+    sort(vec.begin(), vec.end());
+    DFS(0);
 
     return 0;
 }
