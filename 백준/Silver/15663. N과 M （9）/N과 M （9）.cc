@@ -15,7 +15,7 @@ void DFS(int _depth)
     {
         for (int i = 0; i < M; i++)
         {
-            cout << vec[num[i]] << ' ';
+            cout << num[i] << ' ';
         }
         cout << '\n';
         return;
@@ -26,9 +26,9 @@ void DFS(int _depth)
     {
         if (false == visited[i] && temp != vec[i])
         {
-            num[_depth] = i;
-            temp = vec[i];
             visited[i] = true;
+            temp = vec[i];
+            num[_depth] = vec[i];
             DFS(_depth + 1);
             visited[i] = false;
         }
