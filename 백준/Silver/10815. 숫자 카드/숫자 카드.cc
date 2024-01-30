@@ -1,63 +1,39 @@
 #include <iostream>
-#include <vector>
-#include <algorithm>
+#include <set>
 using namespace std;
 
-int main() 
+int main()
 {
-	int N{ 0 }, M{ 0 };
+    ios::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
 
-	cin >> N;
-	vector<int> ns(N);
-	for (int i = 0; i < N; i++)
-	{
-		cin >> ns[i];
-	}
+    size_t N = 0;
+    cin >> N;
 
-	cin >> M;
-	vector<int> ms(M);
-	for (int i = 0; i < M; i++)
-	{
-		cin >> ms[i];
-	}
+    set<int> s;
+    int input = 0;
 
-	sort(ns.begin(), ns.end()); // 정렬
+    for (size_t i = 0; i < N; i++)
+    {
+        cin >> input;
+        s.insert(input);
+    }
 
-	bool bFind{ false };
-	int iLeft{ 0 }, iRight{ static_cast<int>(ns.size() - 1) }, iPivot{ 0 };
+    size_t M = 0;
+    cin >> M;
 
-	for(int i = 0; i < M; ++i)
-	{
-		bFind = false;
-		iLeft = 0;
-		iRight = static_cast<int>(ns.size() - 1);
+    for (size_t i = 0; i < M; i++)
+    {
+        cin >> input;
+        if (s.end() == s.find(input)) // 없는 경우
+        {
+            cout << 0 << ' ';
+        }
+        else // 있는 경우
+        {
+            cout << 1 << ' ';
+        }
+    }
 
-		while (iLeft <= iRight)
-		{
-			iPivot = (iLeft + iRight) / 2;
-
-			if (ns[iPivot] == ms[i])
-			{
-				bFind = true;
-				cout << "1 ";
-				break;
-			}
-			else if (ns[iPivot] < ms[i])
-			{
-				iLeft = iPivot + 1;
-			}
-			else
-			{
-				iRight = iPivot - 1;
-			}
-		}
-		
-		if (false == bFind)
-		{
-			cout << "0 ";
-		}
-	
-	}
-
-	return 0;
+    return 0;
 }
