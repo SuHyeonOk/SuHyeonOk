@@ -1,49 +1,50 @@
 #include <iostream>
-#include <vector>
-#include <set>
 #include <algorithm>
-
+#define MAX 8
 using namespace std;
-#define MAX 9
 
-int N,M;
-int first[MAX];
+int N, M;
 int arr[MAX];
-bool visited[MAX];
-set<vector<int>> s; //중복 제거!
+int num[MAX];
 
-void dfs(int num, int k) { //현재 위치
-    if(k==M) { //목표인 M까지 도달했다면
-        vector<int> v;
-        for(auto i=0;i<M;i++)
-            v.push_back(arr[i]);
-        s.insert(v); //set에 추가
-        v.clear(); //vector 초기화
-    }else { //목표에 도달하지 않았다면
-        for(auto i=num; i<N;i++) {
-            if(!visited[i]) { //방문 안 했다면
-                visited[i]=true; //방문 표시
-                arr[k]=first[i]; // 정렬한 N값을 arr에 저장
-                dfs(i+1, k+1); //더 깊게 들어가자. (M까지)
-                visited[i]=false; //백트래킹 설정 
-            }
+void DFS(int _depth, int _i)
+{
+    if (M == _depth)
+    {
+        for (int i = 0; i < M; i++)
+        {
+            cout << num[i] << ' ';
+        }
+        cout << '\n';
+        return;
+    }
+
+    int temp = 0;
+    for (int i = _i; i < N; i++)
+    {
+        if (temp != arr[i])
+        {
+            temp = arr[i];
+            num[_depth] = arr[i];
+            DFS(_depth + 1, i + 1);
         }
     }
 }
 
-int main() {
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
+
     cin >> N >> M;
 
-    for(int i=0;i<N;i++)
-        cin >> first[i];
-    
-    sort(first,first+N); //정렬
-
-    dfs(0, 0);
-
-    for(auto vector:s) {
-        for(auto temp:vector)
-            cout << temp << " ";
-        cout << "\n";
+    for (int i = 0; i < N; i++)
+    {
+        cin >> arr[i];
     }
+
+    sort(arr, arr + N);
+    DFS(0, 0);
+
+    return 0;
 }
