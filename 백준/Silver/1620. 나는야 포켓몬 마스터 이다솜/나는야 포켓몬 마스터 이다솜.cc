@@ -1,50 +1,54 @@
 #include <iostream>
-#include <map>
-#include <vector>
-#include <algorithm>
-#include <string>
-
+#include <unordered_map>
+#include <cctype>  // isalpha, isdigit 함수를 사용하기 위한 헤더
+#include <string> // stoi 함수를 사용하기 위한 헤더
 using namespace std;
+
+// 문자열이 영문자로만 이루어져 있는지 확인하는 함수
+bool isAlpha(const string& str) 
+{
+    for (char ch : str) 
+    {
+        // isalpha 함수를 사용하여 각 문자가 영문자인지 확인
+        if (false == isalpha(static_cast<unsigned char>(ch))) 
+        {
+            return false; // 영문자가 아닌 경우 false 반환
+        }
+    }
+    return true; // 모든 문자가 영문자인 경우 true 반환
+}
 
 int main()
 {
-    ios_base::sync_with_stdio(false);
-	cin.tie(NULL);
-    
-	int N{ 0 }, M{ 0 };
-	cin >> N >> M;
+    ios::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
 
-	map<string, string> input0;
-	map<string, string> input1;
-	
-	string name{ "" }, temp{ "" };
-	for (int i = 1; i <= N; i++)
-	{
-		cin >> name;
+    int N = 0, M = 0;
+    cin >> N >> M;
 
-		temp = to_string(i);
-		input0.emplace(name, temp);
-		input1.emplace(temp, name);
-	}
+    string str = "";
+    unordered_map<string, int> name;
+    unordered_map<int, string> number;
 
-	for (int i = 0; i < M; i++)
-	{
-		cin >> name;
-		auto result = input0.find(name);
-		if (input0.end() == result)
-		{
-			// 못 찾았다면 다른 map에서 찾는다.
-			 
-			result = input1.find(name);
-			cout << result->second << '\n';
-		}
-		else
-		{
-			// 찾았으면 바로 출력
+    for (int i = 1; i <= N; i++)
+    {
+        cin >> str;
+        name[str] = i;
+        number[i] = str;
+    }
 
-			cout << result->second << '\n';
-		}
-	}
+    for (int i = 0; i < M; i++)
+    {
+        cin >> str;
+        if (true == isAlpha(str)) // 문자열
+        {
+            cout << name[str] << '\n';
+        }
+        else // 숫자
+        {
+            cout << number[stoi(str)] << '\n';
+        }
+    }
 
-	return 0;
+    return 0;
 }
