@@ -1,46 +1,50 @@
-#include<iostream>
-#include<algorithm>
+#include <iostream>
+#include <algorithm>
+#define MAX 7
 using namespace std;
 
-bool check[9];
-int seq[9], ans[9];
 int N, M;
+int arr[MAX];
+int num[MAX];
 
-void dfs(int x, int cnt)
+void DFS(int _depth)
 {
-	if (cnt == M)
-	{
-		for (int i = 0; i < M; i++)
-		{
-			cout << ans[i] << " ";
-		}
-		cout << '\n';
-		return;
-	}
-	int tmp = -1;
+    if (M == _depth)
+    {
+        for (int i = 0; i < M; i++)
+        {
+            cout << num[i] << ' ';
+        }
+        cout << '\n';
+        return;
+    }
 
-	for (int i = 0; i < N; i++)
-	{
-		if (tmp != seq[i]) // tmp는 직전에 골랐던 수
-		{
-			check[i] = true;
-			ans[cnt] = seq[i];
-			tmp = seq[i];
-			dfs(i, cnt + 1);
-			check[i] = false;
-		}
-	}
-		
+    int temp = 0;
+    for (int i = 0; i < N; i++)
+    {
+        if (temp != arr[i])
+        {
+            temp = arr[i];
+            num[_depth] = arr[i];
+            DFS(_depth + 1);
+        }
+    }
 }
 
 int main()
 {
-	cin >> N >> M;
+    ios::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
 
-	for (int i = 0; i < N; i++)
-		cin >> seq[i];
-	
-	sort(seq, seq + N); // 오름차순 정렬
+    cin >> N >> M;
 
-	dfs(0, 0);
+    for (int i = 0; i < N; i++)
+    {
+        cin >> arr[i];
+    }
+
+    sort(arr, arr + N);
+    DFS(0);
+
+    return 0;
 }
