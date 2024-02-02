@@ -1,57 +1,47 @@
 #include <iostream>
 #include <algorithm>
-#include <set>
-#define MAX 10001
+#define MAX 8
 using namespace std;
 
-int N{ 0 }, M{ 0 };
-int num[MAX];
+int N, M;
 int arr[MAX];
+int num[MAX];
 
-void DFS(int _count, int _index)
+void DFS(int _depth, int _i)
 {
-    // 목표 M까지 도달 했다면
-    if (_count == M)
+    if (M == _depth)
     {
         for (int i = 0; i < M; i++)
         {
-            cout << arr[i] << ' ';
+            cout << num[i] << ' ';
         }
         cout << '\n';
-
         return;
     }
 
-    // 목표에 도달하지 못 했다면
-    for (int i = _index; i < N; i++)
+    int temp = 0;
+    for (int i = _i; i < N; i++)
     {
-        arr[_count] = num[i];
-        DFS(_count + 1, i); // M까지 들어간다.
+        if (temp != arr[i])
+        {
+            temp = arr[i];
+            num[_depth] = arr[i];
+            DFS(_depth + 1, i);
+        }
     }
 }
 
 int main()
 {
-    cin >> N >> M;
+    ios::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
 
-    int temp{ 0 };
-    set<int> input;
+    cin >> N >> M;
     for (int i = 0; i < N; i++)
     {
-        cin >> temp;
-        input.insert(temp);
+        cin >> arr[i];
     }
-
-    int index{ 0 };
-    for (set<int>::iterator it = input.begin(); it != input.end(); it++) 
-    {
-        num[index] = *it;
-        ++index;
-    }
-
-    N = static_cast<int>(input.size()); // 중복된 숫자를 제외한 숫자로 갱신
-    sort(num, num + N);
-
+    sort(arr, arr + N);
     DFS(0, 0);
 
     return 0;
