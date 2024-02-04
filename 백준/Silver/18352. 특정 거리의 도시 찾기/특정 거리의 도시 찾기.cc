@@ -1,20 +1,32 @@
 #include <iostream>
 #include <vector>
 #include <queue>
-#include <algorithm>
+#define M_MAX 1000001
 using namespace std;
 
-#define MAX 300001
-
-int N{ 0 }, M{ 0 }, K{ 0 }, X{ 0 };
+int N, M, K, X;
 vector<vector<int>> vec;
-vector<int> dis;
+vector<int> result;
 
-void Dijkstra(int _start)
+void DFS(int _depth, int _x)
 {
-    dis[_start] = 0; // 시작위치에서 시작위치로 가는 비용은 0
+    size_t size = vec[_x].size();
+    for (size_t i = 0; i < size; i++)
+    {
+        DFS(_depth + 1, vec[_x][i]);
+    }
+
+    if (result[_x] > _depth)
+    {
+        result[_x] = _depth;
+    }
+}
+
+void Dijkstar(int _pos)
+{
+    result[_pos] = 0;
     queue<int> q;
-    q.push(_start);
+    q.push(_pos);
 
     while (false == q.empty())
     {
@@ -25,14 +37,13 @@ void Dijkstra(int _start)
         for (size_t i = 0; i < size; i++)
         {
             int next = vec[current][i];
-            if (dis[next] > dis[current] + 1)
+            if (result[next] > result[current] + 1)
             {
-                dis[next] = dis[current] + 1;
+                result[next] = result[current] + 1;
                 q.push(next);
             }
         }
     }
-
 }
 
 int main()
@@ -41,29 +52,30 @@ int main()
     cin.tie(NULL); cout.tie(NULL);
 
     cin >> N >> M >> K >> X;
+    
     vec.resize(N + 1);
-    dis.resize(N + 1, MAX);
+    result.resize(N + 1, M_MAX);
 
-    int A{ 0 }, B{ 0 };
+    int A = 0, B = 0;
     for (int i = 0; i < M; i++)
     {
         cin >> A >> B;
         vec[A].push_back(B);
     }
+    
+    Dijkstar(X);
 
-    Dijkstra(X);
-
-    bool check{ false };
+    bool find = false;
     for (int i = 1; i <= N; i++)
     {
-        if (dis[i] == K)
+        if (K == result[i]) 
         {
-            check = true;
+            find = true;
             cout << i << '\n';
         }
     }
 
-    if (false == check)
+    if (find == false)
     {
         cout << -1;
     }
