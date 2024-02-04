@@ -1,5 +1,5 @@
 #include <iostream>
-#include <unordered_map>
+#include <unordered_set>
 using namespace std;
 
 int main()
@@ -11,18 +11,18 @@ int main()
     cin >> N >> M;
 
     string input = "";
-    unordered_map<string, int> um;
+    unordered_set<string> us;
     for (int i = 0; i < N; i++)
     {
         cin >> input;
-        um[input]++;
+        us.insert(input);
     }
 
     int result = 0;
     for (int i = 0; i < M; i++)
     {
         cin >> input;
-        if (0 != um[input])
+        if (us.end() != us.find(input))
         {
             ++result;
         }
