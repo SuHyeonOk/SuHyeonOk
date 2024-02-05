@@ -1,59 +1,84 @@
-#include <iostream>
-#include <string>
-#include <vector>
-#include <queue>
-#include <algorithm>
+#include<iostream>
+#include<vector>
+#include<queue>
+#define MAX 1000
 using namespace std;
-int dir[4][2] = { {0,1},{1,0},{0,-1},{-1,0} };
-int r,c;
-int visited[1000][1000][2];
-int bfs(int row, int col, vector<string> &graph ) {
-    queue<pair<pair<int, int>, int>> q;
-    q.push({ {0,0},1 });
-    visited[0][0][1] = 1;
 
-    while (!q.empty()) {
-        int current_r = q.front().first.first;
-        int current_c = q.front().first.second;
-        int block = q.front().second;
+int map[MAX][MAX][2];
+
+int dx[4] = { -1, 1, 0, 0 };
+int dy[4] = { 0, 0, -1, 1 };
+
+int BFS(int N, int M)
+{
+    queue<pair<int, pair<int, int>>> q;
+    q.push({ 0, { 0, 0 } });
+
+    while (false == q.empty())
+    {
+        int broken = q.front().first;
+        int x = q.front().second.first;
+        int y = q.front().second.second;
         q.pop();
 
-        if (current_r == r - 1 && current_c == c - 1) { //도착지에 도달하면 return
-            return visited[current_r][current_c][block];
+        if (x == N - 1 && y == M - 1)
+        {
+            return map[N - 1][M - 1][broken] + 1;
         }
 
-        for (int i = 0; i < 4; i++) {
-            int next_r = current_r + dir[i][0];
-            int next_c = current_c + dir[i][1];
-            if (next_r >= 0 && next_r < r&& next_c >= 0 && next_c < c) {
-                //다음 칸이 벽이고 뚫을 수 있을 때
-                if (graph[next_r][next_c] == '1' && block) {
-                    q.push({ {next_r,next_c} ,0 });
-                    visited[next_r][next_c][block - 1] = visited[current_r][current_c][block] + 1;
-                }
-                //다음 칸이 0이고 방문하지 않았을 때
-                else if (graph[next_r][next_c] == '0' && visited[next_r][next_c][block] == 0) {
-                    q.push({ {next_r,next_c},block });
-                    visited[next_r][next_c][block] = visited[current_r][current_c][block] + 1;
+        for (size_t i = 0; i < 4; i++)
+        {
+            int nx = x + dx[i];
+            int ny = y + dy[i];
+
+            if (nx < 0 || nx >= N || ny < 0 || ny >= M)
+            {
+                continue;
+            }
+
+            if (map[nx][ny][0] == 1)
+            {
+                if (false == broken)
+                {
+                    map[nx][ny][broken + 1] = map[x][y][broken] + 1;
+                    q.push({ 1, { nx, ny } });
                 }
             }
+            else if (map[nx][ny][0] == 0)
+            {
+                if (broken == 1 && map[nx][ny][broken])
+                {
+                    continue;
+                }
+
+                map[nx][ny][broken] = map[x][y][broken] + 1;
+                q.push({ broken, { nx, ny } });
+            }
         }
-
     }
-    return -1;
 
+    return -1;
 }
 
-int main() {
+int main()
+{
     ios::sync_with_stdio(false);
-    cin.tie(0);
-    cout.tie(0);
+    cin.tie(NULL); cout.tie(NULL);
 
-    cin >> r>>c;
-    vector<string> graph(r);
-    for (int i = 0; i < r; i++) {
-        cin >> graph[i];
+    int N, M;
+    cin >> N >> M;
+
+    char input;
+    for (int y = 0; y < N; y++)
+    {
+        for (int x = 0; x < M; x++)
+        {
+            cin >> input;
+            map[y][x][0] = input - '0';
+        }
     }
-    cout <<bfs(0, 0,graph);
+
+    cout << BFS(N, M);
+
     return 0;
 }
