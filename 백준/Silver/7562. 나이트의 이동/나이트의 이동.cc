@@ -26,8 +26,13 @@ int BFS(int _I, int _StartX, int _StartY, int _EndX, int _EndY)
     {
         int x = q.front().X;
         int y = q.front().Y;
-        int Count = q.front().Count + 1;
+        int Count = q.front().Count;
         q.pop();
+
+        if (x == _EndX && y == _EndY)
+        {
+            return Count;
+        }
 
         for (size_t i = 0; i < 8; i++)
         {
@@ -39,18 +44,13 @@ int BFS(int _I, int _StartX, int _StartY, int _EndX, int _EndY)
                 continue;
             }
 
-            if (nx == _EndX && ny == _EndY)
-            {
-                return Count;
-            }
-
             if (true == visited[ny][nx])
             {
                 continue;
             }
 
             visited[ny][nx] = true;
-            q.push({ nx, ny, Count });
+            q.push({ nx, ny, Count + 1 });
         }
     }
 
