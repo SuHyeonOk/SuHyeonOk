@@ -34,8 +34,8 @@ int BFS()
             }
             else if (NX < 100)
             {
-                while (0 != map[NX])
-                {
+                if (0 != map[NX])
+                { 
                     NX = map[NX];
                 }
 
