@@ -1,43 +1,88 @@
 #include <iostream>
-#include <string>
+#include <algorithm>
 using namespace std;
 
 int main()
 {
-	int N = 0;
-	string Pattern = "";
-	cin >> N >> Pattern;
+    ios::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
 
-	int Position = Pattern.find('*');
-	string Start = Pattern.substr(0, Position);
-	string End = Pattern.substr(Position + 1, Pattern.size());
+    int N = 0;
+    string Pattern = "";
+    cin >> N >> Pattern;
+
+    string Start = "";
+    string End = "";
+    bool Find = false;
+    size_t PatternSize = Pattern.size();
+    for (size_t i = 0; i < PatternSize; i++)
+    {
+        if (false == Find)
+        {
+            if (Pattern[i] == '*')
+            {
+                Find = true;
+                continue;
+            }
+
+            Start += Pattern[i];
+        }
+        else
+        {
+            End += Pattern[i];
+        }
+    }
+    int StartSize = Start.size();
+    int EndSize = End.size();
 
 
-	string Input = "";
-	for (int i = 0; i < N; i++) 
-	{
-		cin >> Input;
+    string Input = "";
+    while(N--)
+    {
+        cin >> Input;
+        Find = false;
 
-		if (Input.size() < Start.size() + End.size()) // 비교할 문자보다 문자 길이가 짧다면 NE
-		{
-			cout << "NE" << "\n";
-			continue;
-		}
+        int InputSize = Input.size();
+        if (InputSize < StartSize + EndSize)
+        {
+            cout << "NE" << '\n';
+            continue;
+        }
 
-		// 비교할 길이 만큼의 문자 Input에서 떼오기
-		string InputStart = Input.substr(0, Start.size());
-		string InputEnd = Input.substr(Input.size() - End.size(), Input.size());
+        for (int i = 0; i < StartSize; i++)
+        {
+            if (Input[i] != Start[i])
+            {
+                Find = true;
+                continue;
+            }
+        }
 
-		if (InputStart == Start && InputEnd == End)
-		{
-			cout << "DA" << "\n";
-		}
-		else
-		{
-			cout << "NE" << "\n";
-		}
+        if (true == Find)
+        {
+            cout << "NE" << '\n';
+            continue;
+        }
 
-	}
+        int j = 1;
+        for (int i = EndSize - 1; i >= 0; i--)
+        {
+            if (Input[InputSize - j] != End[i])
+            {
+                Find = true;
+                continue;
+            }
+            j++;
+        }
 
-	return 0;
+        if (true == Find)
+        {
+            cout << "NE" << '\n';
+            continue;
+        }
+
+        cout << "DA" << '\n';
+    }
+
+    return 0;
 }
