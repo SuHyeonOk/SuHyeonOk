@@ -25,14 +25,13 @@ int main()
     int N = 0;
     cin >> N;
 
-    string Input = "";
     vector<string> vec(N);
     for (int i = 0; i < N; i++)
     {
         cin >> vec[i];
     }
     sort(vec.begin(), vec.end(), Standard);
-    
+
     string Temp = "";
     for (int i = 0; i < N; i++)
     {
@@ -42,6 +41,6 @@ int main()
             Temp = vec[i];
         }
     }
-    
+
     return 0;
 }
