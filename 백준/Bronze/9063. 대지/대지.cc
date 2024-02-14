@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 #define MIN -10001
 #define MAX 10001
 using namespace std;
@@ -17,22 +18,10 @@ int main()
     {
         cin >> X >> Y;
         
-        if (MinX > X)
-        {
-            MinX = X;
-        }
-        if (MaxX < X)
-        {
-            MaxX = X;
-        }
-        if (MinY > Y)
-        {
-            MinY = Y;
-        }
-        if (MaxY < Y)
-        {
-            MaxY = Y;
-        }
+        MinX = min(MinX, X);
+        MaxX = max(MaxX, X);
+        MinY = min(MinY, Y);
+        MaxY = max(MaxY, Y);
     }
 
     cout << (MaxX - MinX) * (MaxY - MinY);
