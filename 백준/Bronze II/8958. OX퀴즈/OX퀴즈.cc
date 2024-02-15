@@ -9,11 +9,10 @@ int main()
     int TestCase = 0;
     cin >> TestCase;
 
-    int Sum = 0;
-    int Count = 0;
+    int Sum = 0, Count = 0;
+    string Input = "";
     while (TestCase--)
     {
-        string Input = "";
         cin >> Input;
 
         size_t Size = Input.size();
@@ -24,7 +23,7 @@ int main()
                 ++Count;
                 Sum += Count;
             }
-            else if (Input[i] == 'X')
+            else
             {
                 Count = 0;
             }
