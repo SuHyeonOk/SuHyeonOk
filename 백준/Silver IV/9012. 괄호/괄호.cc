@@ -1,34 +1,52 @@
 #include <iostream>
-#include<string>
-#include<stack>
 using namespace std;
 
 int main()
 {
-	short T{ 0 };
-	string str{ "" };
+    ios::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
 
-	cin >> T;
-	while (T--)
-	{
-		cin >> str;
-		stack<char> sta;
+    int TestCase = 0;
+    cin >> TestCase;
 
-		for (size_t i = 0; i < str.length(); i++)
-		{
-			if (str[i] == '(') sta.push('(');
+    while (TestCase--)
+    {
+        string Str = " ";
+        cin >> Str;
 
-			if (str[i] == ')')
-			{
-				if (!sta.empty()) sta.pop();
-				else { cout << "NO" << "\n"; str = "NO";  break; }
-			}
-		}
+        int Count = 0;
+        size_t Size = Str.size();
+        for (size_t i = 0; i < Size; i++)
+        {
+            if (Str[i] == '(')
+            {
+                ++Count;
+            }
+            else
+            {
+                --Count;
+                if (Count < 0)
+                {
+                    cout << "NO" << '\n';
+                    Str = "NO";
+                    break;
+                }
+            }
+        }
 
-		if (str == "NO") continue;
-		if (sta.empty()) cout << "YES" << "\n";
-		else cout << "NO" << "\n";
-	}
+        if (Str == "NO")
+        {
+            continue;
+        }
+        else if(Count == 0)
+        {
+            cout << "YES" << '\n';
+        }
+        else if(Count != 0)
+        {
+            cout << "NO" << '\n';
+        }
+    }
 
-	return 0;
+    return 0;
 }
