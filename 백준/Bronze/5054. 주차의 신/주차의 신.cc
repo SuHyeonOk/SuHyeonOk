@@ -1,29 +1,32 @@
 #include <iostream>
-#include <string>
+#include <algorithm>
 using namespace std;
 
-int main() 
+int main()
 {
-    int t=0;
-    cin >> t;
+    ios::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
 
-    while(t--)
+    int T = 0;
+    cin >> T;
+
+    int N = 0, X = 0, Min = 100, Max = 0;
+    while (T--)
     {
-        int min=100, max=-1; 
-        int n=0, road=0, input=0;
-        
-        cin >> n;
-        for(int j=0; j<n; j++)
+        cin >> N;
+
+        while (N--)
         {
-            cin >> input;      
-        
-           if(input<min)
-               min=input;
-           if(input>max)
-               max=input;  
+            cin >> X;
+
+            Min = min(Min, X);
+            Max = max(Max, X);
         }
-        road=(max-min)*2;
-        cout << road << endl;
+
+        cout << (Max - Min) * 2 << '\n';
+        Min = 100;
+        Max = 0;
     }
+
     return 0;
 }
