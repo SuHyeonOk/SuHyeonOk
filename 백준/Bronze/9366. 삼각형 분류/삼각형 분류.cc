@@ -1,13 +1,13 @@
 #include <iostream>
 #include <algorithm>
- 
+
 using namespace std;
- 
+
 int main()
 {
     int t;
     cin >> t;
- 
+
     int arr[3];
     int a;
     for (int i = 0; i < t; i++) {
@@ -16,11 +16,11 @@ int main()
             cin >> a;
             arr[j] = a;
         }
- 
+
         sort(begin(arr), end(arr));
-    
+
         cout << "Case #" << i + 1 << ": ";
- 
+
         if (arr[0] + arr[1] <= arr[2])
         {
             cout << "invalid!\n";
@@ -29,7 +29,7 @@ int main()
         {
             cout << "equilateral\n";
         }
-        else if (arr[0] == arr[1] || arr[1] == arr[2] || arr[0] == arr[2])
+        else if (arr[0] == arr[1] || arr[1] == arr[2])
         {
             cout << "isosceles\n";
         }
@@ -38,6 +38,6 @@ int main()
             cout << "scalene\n";
         }
     }
- 
+
     return 0;
 }
