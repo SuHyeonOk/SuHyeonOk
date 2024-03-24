@@ -1,26 +1,36 @@
 #include <iostream>
+#include <stack>
 using namespace std;
 
-int main() 
+int main()
 {
-  int arr[100001], n, max = 0, count = 0;
-  cin >> n;
+    ios::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
 
-  for(int i = 0; i< n; i++)
-  {
-      cin >> arr[i];
-  }
+    int N = 0;
+    cin >> N;
 
-  for(int i = n - 1; i >= 0; i--)
-  {
-    if(max < arr[i])
+    int h = 0;
+    stack<int> s;
+    for (int i = 0; i < N; i++)
     {
-      count++;
-      max = arr[i];
+        cin >> h;
+        s.push(h);
     }
-  }
 
-  cout<<count;
- 
-  return 0;
+    int Result = 1;
+    size_t Size = s.size();
+    for (size_t i = 0; i < Size; i++)
+    {
+        if (h < s.top())
+        {
+            h = s.top();
+            ++Result;
+        }
+        s.pop();
+    }
+
+    cout << Result;
+
+    return 0;
 }
