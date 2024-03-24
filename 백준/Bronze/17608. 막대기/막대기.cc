@@ -1,6 +1,8 @@
 #include <iostream>
-#include <stack>
+#define MAX 100001
 using namespace std;
+
+int arr[MAX];
 
 int main()
 {
@@ -9,25 +11,22 @@ int main()
 
     int N = 0;
     cin >> N;
-
+    
     int h = 0;
-    stack<int> s;
     for (int i = 0; i < N; i++)
     {
         cin >> h;
-        s.push(h);
+        arr[i] = h;
     }
 
     int Result = 1;
-    size_t Size = s.size();
-    for (size_t i = 0; i < Size; i++)
+    for (int i = N; i >= 0; --i)
     {
-        if (h < s.top())
+        if (h < arr[i])
         {
-            h = s.top();
+            h = arr[i];
             ++Result;
         }
-        s.pop();
     }
 
     cout << Result;
