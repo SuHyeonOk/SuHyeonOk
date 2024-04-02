@@ -1,124 +1,72 @@
 #include <iostream>
 #include <queue>
-#include <string>
-#include <vector>
-#define MAX 1002
 using namespace std;
 
-int R, C, Result;
-int JX, JY;
-char map[MAX][MAX];
-vector<pair<int, int>> Fvec;
+struct xy { int x, y; };
 
-int dx[4]{ 0, 0, -1, 1 };
-int dy[4]{ -1, 1, 0, 0 };
+int R, C;
+char maze[1000][1001]; // 널문자 고려
+int dx[] = {0, 0, 1, -1};
+int dy[] = {1, -1, 0, 0};
+queue<xy> J, F;
 
-struct INFO
-{
-    int X = 0;
-    int Y = 0;
-    int Count = 0;
-};
-
-string BFS()
-{
-    queue<INFO> q;
-
-    // 불은 여러개가 될 수 있다.
-    size_t Size = Fvec.size();
-    if (0 != Size)
-    {
-        for (size_t i = 0; i < Size; i++)
-        {
-            q.push({ Fvec[i].first, Fvec[i].second, -1});
-            map[Fvec[i].second][Fvec[i].first] = -1;
+void firesSpread() {
+    int size = F.size();
+    while(size--) {
+        int x = F.front().x, y = F.front().y; F.pop();
+        for(int i=4; i--;) {
+            int nx = x + dx[i], ny = y + dy[i];
+            if(nx < 0 || nx >= R || ny < 0 || ny >= C) continue;
+            if(maze[nx][ny]=='#') continue;
+            maze[nx][ny] = '#';
+            F.push({nx, ny});
         }
     }
-
-    // 지훈
-    q.push({ JX, JY, 0 });
-    map[JY][JX] = -1;
-
-    while (false == q.empty())
-    {
-        int X = q.front().X;
-        int Y = q.front().Y;
-        int Count = q.front().Count;
-        q.pop();
-        
-        // 불이 아니면서 탈출을 성공한 경우
-        if (Count != -1 && 0 >= X || X > C || 0 >= Y || Y > R)
-        {
-            return to_string(Count);
-        }
-
-        for (size_t i = 0; i < 4; i++)
-        {
-            int NX = X + dx[i];
-            int NY = Y + dy[i];
-
-            if (-1 == Count) // 불인 경우 탈출 경로를 벗어나면 안 된다.
-            {
-                if (NX <= 0 || NX > C || NY <= 0 || NY > R)
-                {
-                    continue;
-                }
-            }
-            else // 지훈의 경우 탈출 경로를 저장하기 위해서 더 범위 넓게 탐색
-            {
-                if (NX < 0 || NX > C + 1 || NY < 0 || NY > R + 1)
-                {
-                    continue;
-                }
-            }
-
-            if ('#' == map[NY][NX] || -1 == map[NY][NX])
-            {
-                continue;
-            }
-
-            map[NY][NX] = -1;
-
-            if (-1 == Count) // 불
-            {
-                q.push({ NX, NY, -1 });
-            }
-            else // 지훈
-            {
-                q.push({ NX, NY, Count + 1 });
-            }
-        }
-    }
-
-    return "IMPOSSIBLE";
 }
 
-int main()
-{
-    ios::sync_with_stdio(false);
-    cin.tie(NULL); cout.tie(NULL);
+bool JihoonEscapes() {
+    int size = J.size();
+    if(size == 0) {
+        cout << "IMPOSSIBLE";
+        exit(0);
+    }
+    while(size--) {
+        int x = J.front().x, y = J.front().y; J.pop();
+        if(x == 0 || x == R-1 || y == 0 || y == C-1) return true;
+        for(int i=4; i--;) {
+            int nx = x + dx[i], ny = y + dy[i];
+            if(nx < 0 || nx >= R || ny < 0 || ny >= C) continue;
+            if(maze[nx][ny]=='#') continue;
+            maze[nx][ny] = '#';
+            J.push({nx, ny});
+        }
+    }
+    return false;
+}
 
+int main() {
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    
     cin >> R >> C;
-
-    for (int y = 1; y <= R; y++)
-    {
-        for (int x = 1; x <= C; x++)
-        {
-            cin >> map[y][x];
-
-            if ('J' == map[y][x]) // 지훈이 위치
-            {
-                JX = x;
-                JY = y;
+    for(int i=0; i<R; i++) {
+        cin >> maze[i];
+        for(int j=0; j<C; j++) {
+            if(maze[i][j] == 'J') {
+                J.push({i, j});
+                maze[i][j] = '#';
             }
-            else if ('F' == map[y][x]) // 불 위치
-            {
-                Fvec.push_back({ x, y });
+            else if(maze[i][j] == 'F') {
+                F.push({i, j});
+                maze[i][j] = '#';
             }
         }
     }
 
-    cout << BFS();
-
-    return 0;
+    int step = 0;
+    do {
+        firesSpread();
+        step++;
+    } while(!JihoonEscapes());
+    cout << step;
 }
