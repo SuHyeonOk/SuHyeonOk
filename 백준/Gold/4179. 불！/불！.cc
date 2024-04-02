@@ -10,7 +10,6 @@ int JX, JY;
 char map[MAX][MAX];
 vector<pair<int, int>> Fvec;
 
-bool visited[MAX][MAX];
 int dx[4]{ 0, 0, -1, 1 };
 int dy[4]{ -1, 1, 0, 0 };
 
@@ -32,13 +31,13 @@ string BFS()
         for (size_t i = 0; i < Size; i++)
         {
             q.push({ Fvec[i].first, Fvec[i].second, -1});
-            visited[Fvec[i].second][Fvec[i].first] = true;
+            map[Fvec[i].second][Fvec[i].first] = -1;
         }
     }
 
     // 지훈
     q.push({ JX, JY, 0 });
-    visited[JY][JX] = true;
+    map[JY][JX] = -1;
 
     while (false == q.empty())
     {
@@ -76,12 +75,12 @@ string BFS()
                 }
             }
 
-            if ('#' == map[NY][NX] || true == visited[NY][NX])
+            if ('#' == map[NY][NX] || -1 == map[NY][NX])
             {
                 continue;
             }
 
-            visited[NY][NX] = true;
+            map[NY][NX] = -1;
 
             if (-1 == Count) // 불
             {
