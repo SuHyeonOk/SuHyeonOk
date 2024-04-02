@@ -46,13 +46,10 @@ string BFS()
         int Count = q.front().Count;
         q.pop();
         
-        // 탈출을 성공한 경우
-        if (0 >= X || X > C || 0 >= Y || Y > R)
+        // 불이 아니면서 탈출을 성공한 경우
+        if (Count != -1 && 0 >= X || X > C || 0 >= Y || Y > R)
         {
-            if (Count != -1) // 불이 아니라는 예외처리
-            {
-                return to_string(Count);
-            }
+            return to_string(Count);
         }
 
         for (size_t i = 0; i < 4; i++)
