@@ -1,25 +1,40 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <map>
+#include <string>
 using namespace std;
 
-long long answer;
-string a, b, c;
-map<string, int> valuemap;
-vector<string> stv{"black", "brown", "red", "orange", "yellow",
-                   "green", "blue", "violet", "grey", "white"};
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
 
-int main(void) {
-  ios::sync_with_stdio(0);
-  cin.tie(0);
+    map<string, string> m;
+    m.insert({ "black", "0"});
+    m.insert({ "brown", "1"});
+    m.insert({ "red", "2"});
+    m.insert({ "orange", "3"});
+    m.insert({ "yellow", "4"});
+    m.insert({ "green", "5"});
+    m.insert({ "blue", "6"});
+    m.insert({ "violet", "7"});
+    m.insert({ "grey", "8"});
+    m.insert({ "white", "9"});
 
-  for(int i = 0; i < 10; i++){
-    valuemap.insert({stv[i], i});
-  }
-  cin >> a >> b >> c;
+    string Input = "white";
+    cin >> Input;
+    string Result = m[Input];
 
-  if(valuemap[a] != 0) answer = 10 * valuemap[a];
-  answer += valuemap[b];
-  answer *= pow(10, valuemap[c]);
-  cout << answer;
+    cin >> Input;
+    Result += m[Input];
 
-  return 0;
+    cin >> Input;
+    int Num = stoi(m[Input]);
+    for (int i = 0; i < Num; ++i)
+    {
+        Result += "0";
+    }
+
+    cout << stol(Result);
+
+    return 0;
 }
