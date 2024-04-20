@@ -1,9 +1,10 @@
-#include <bits/stdc++.h>
-
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <algorithm>
 using namespace std;
 
 const int INF = 1e9 + 7;
-int dist_x_to_n[1001];
 vector<int> dist[2];
 vector<pair<int, int>> graph[2][1001];
 int n, m, x;
@@ -37,8 +38,6 @@ void dijkstra(int k) {
 int main() {
 	ios::sync_with_stdio(0);
 	cin.tie(0); cout.tie(0);
-
-	fill_n(dist_x_to_n, 1001, INF);
 
 	cin >> n >> m >> x;
 
