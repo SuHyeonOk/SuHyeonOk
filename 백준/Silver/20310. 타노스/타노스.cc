@@ -25,14 +25,54 @@ int main()
         }
     }
 
-    for (int i = 0; i < Zero / 2; i++)
+    Zero /= 2;
+    One /= 2;
+
+    int checkErase[501]{ 0, };
+
+    int zeroCnt = 0;
+    for (int i = Length - 1; i >= 0; i--)
     {
-        cout << 0;
+        if (zeroCnt == Zero)
+        {
+            break;
+        }
+
+        if (Str[i] == '0')
+        {
+            checkErase[i] = true;
+            zeroCnt++;
+        }
     }
-    for (int i = 0; i < One / 2; i++)
+
+
+    int oneCnt = 0;
+    for (int i = 0; i < Length; i++)
     {
-        cout << 1;
+        if (oneCnt == One)
+        {
+            break;
+        }
+
+        if (Str[i] == '1')
+        {
+            checkErase[i] = true;
+            oneCnt++;
+        }
     }
+
+    string ans = "";
+    for (int i = 0; i < Length; i++)
+    {
+        if (checkErase[i])
+        {
+            continue;
+        }
+
+        ans += Str[i];
+    }
+
+    cout << ans;
 
     return 0;
 }
