@@ -1,143 +1,94 @@
+// 시간 확인 용
+
+
+
+
+
+
+
+
+
+
 #include <iostream>
-#include <vector>
 #include <queue>
+#include <tuple>
+#include <vector>
 #include <string.h>
 using namespace std;
-
-int L, R, C;
-vector<vector<vector<char>>> vec;
-vector<vector<vector<bool>>> visited;
-int dl[2]{ -1, 1 };
-int dx[4]{ 0, 0, -1, 1 };
-int dy[4]{ -1, 1, 0, 0 };
-
-typedef struct tagBuilding
-{
-    int L = 0, R = 0, C = 0;
-    int Time = 0;
-}INFO;
-
-int BFS(int SL, int SR, int SC)
-{
-    queue<INFO> q;
-    q.push({ SL, SR, SC, 0 });
-    visited[SL][SR][SC] = true;
-
-    while (false == q.empty())
-    {
-        int CurrentL = q.front().L;
-        int CurrentR = q.front().R;
-        int CurrentC = q.front().C;
-        int CurrentTime = q.front().Time;
+int l, r, c;
+char building[31][31][31];
+bool visit[31][31][31];
+int dx[] = {1,-1,0,0,0,0}; // 동서남북상하
+int dy[] = {0,0,-1,1,0,0};
+int dz[] = {0,0,0,0,1,-1};
+vector<int> result;
+bool found = false;
+void bfs(int x1, int y1,int z1, int c1){
+    queue<tuple<int, int, int, int>> q;
+    q.push(make_tuple(x1, y1, z1, c1));
+    visit[z1][y1][x1] = true;
+    
+    while(!q.empty()){
+        int x = get<0>(q.front());
+        int y = get<1>(q.front());
+        int z = get<2>(q.front());
+        int cnt = get<3>(q.front());
+        if(building[z][y][x]=='E'){
+            found = true;  
+            result.push_back(cnt);
+            break; // 탈출 했을 경우
+        }
         q.pop();
-
-        if ('E' == vec[CurrentL][CurrentR][CurrentC]) // 출구 찾음 종료!
-        {
-            return CurrentTime;
-        }
-
-        for (size_t i = 0; i < 4; i++) // 동 서 남 북
-        {
-            int NextL = CurrentL;
-            int NextR = CurrentR + dx[i];
-            int NextC = CurrentC + dy[i];
-
-            if (NextR < 0 || NextR >= R || NextC < 0 || NextC >= C)
-            {
-                continue;
+        
+        for (int i = 0; i < 6;i++){
+            int n_x = x + dx[i];
+            int n_y = y + dy[i];
+            int n_z = z + dz[i];
+ 
+            if (n_x >= 0 && n_y >= 0 && n_z >= 0 && n_x < c && n_y < r && n_z < l){
+                if(!visit[n_z][n_y][n_x] && building[n_z][n_y][n_x]!='#'){
+                    q.push(make_tuple(n_x, n_y, n_z,cnt+1));
+                    visit[n_z][n_y][n_x] = true;
+                } 
             }
-
-            if ('#' == vec[NextL][NextR][NextC])
-            {
-                continue;
-            }
-
-            if (true == visited[NextL][NextR][NextC])
-            {
-                continue;
-            }
-
-            visited[NextL][NextR][NextC] = true;
-            q.push({ NextL, NextR, NextC, CurrentTime + 1 });
-        }
-
-        for (size_t i = 0; i < 2; i++) // 상 하
-        {
-            int NextL = CurrentL + dl[i];
-            int NextR = CurrentR;
-            int NextC = CurrentC;
-           
-            if (NextL < 0 || NextL >= L)
-            {
-                continue;
-            }
-
-            if ('#' == vec[NextL][NextR][NextC])
-            {
-                continue;
-            }
-
-            if (true == visited[NextL][NextR][NextC])
-            {
-                continue;
-            }
-
-            visited[NextL][NextR][NextC] = true;
-            q.push({ NextL, NextR, NextC, CurrentTime + 1 });
         }
     }
-
-    return -1;
 }
-
-int main()
-{
-    ios::sync_with_stdio(false);
-    cin.tie(NULL); cout.tie(NULL);
-
-    while (true)
-    {
-        cin >> L >> R >> C; // 층, 행, 열
-
-        if (L == 0 && R == 0 && C == 0) // while문 종료 조건
-        {
-            break;
+int main(){
+    while(1){
+        cin >> l >> r >> c;
+        if (l == 0 && r == 0 && c == 0){
+            break; // 000이 들어오면 종료
         }
-
-        vec.clear();
-        vec.resize(L, vector<vector<char>>(R, vector<char>(C, 0)));
-        visited.clear();
-        visited.resize(L, vector<vector<bool>>(R, vector<bool>(C, false)));
-
-        int StartL = 0, StartR = 0, StartC = 0;
-        for (int l = 0; l < L; l++)
-        {
-            for (int r = 0; r < R; r++)
-            {
-                for (int c = 0; c < C; c++)
-                {
-                    cin >> vec[l][r][c];
-
-                    if ('S' == vec[l][r][c])
-                    {
-                        StartL = l;
-                        StartR = r;
-                        StartC = c;
+        int start_x, start_y, start_z;
+        memset(visit, false, sizeof(visit));
+        found = false;
+ 
+        for (int i = 0; i < l;i++){
+            for (int j = 0; j < r; j++){
+                for (int k = 0; k < c; k++){
+                    cin >> building[i][j][k];
+                    if( building[i][j][k] == 'S'){
+                        start_x = k;
+                        start_y = j;
+                        start_z = i; //시작 좌표 저장
                     }
                 }
             }
         }
-
-        int Time = BFS(StartL, StartR, StartC);
-        if (-1 == Time)
-        {
-            cout << "Trapped!" << '\n';
-        }
-        else
-        {
-            cout << "Escaped in " << Time << " minute(s)." << '\n';
+        bfs(start_x, start_y, start_z, 0);
+        if(!found){ // 탈출을 못했을 경우 
+            result.push_back(-1);
         }
     }
-
+    for (int i = 0; i < result.size();i++){
+        if(result[i] == -1){
+            cout << "Trapped!" << '\n';
+        }
+        else{
+            cout << "Escaped in " << result[i] << " minute(s)." << '\n';
+        }
+    }
+ 
     return 0;
 }
