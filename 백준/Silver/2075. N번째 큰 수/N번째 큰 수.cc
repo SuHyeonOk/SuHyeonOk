@@ -1,6 +1,5 @@
 #include <iostream>
-#include <vector>
-#include <algorithm>
+#include <queue>
 using namespace std;
 
 int main()
@@ -11,17 +10,21 @@ int main()
     int N = 0;
     cin >> N;
 
-    int Max = N * N;
-    vector<int> vec(Max);
+    priority_queue<int, vector<int>, greater<int>> pq;
 
-    for (int i = 0; i < Max; i++)
+    int Input = 0;
+    for (int i = 0; i < N * N; i++)
     {
-        cin >> vec[i];
+        cin >> Input;
+        pq.push(Input);
+
+        if (pq.size() > N)
+        {
+            pq.pop();
+        }
     }
 
-    sort(vec.begin(), vec.end(), greater<int>());
-
-    cout << vec[N - 1];
+    cout << pq.top();
 
     return 0;
 }
