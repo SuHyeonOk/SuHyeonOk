@@ -5,7 +5,7 @@
 #define MAX 100001
 using namespace std;
 
-int N, Temp;
+int N;
 int arr[MAX];
 int visited[MAX];
 vector<int> vec;
@@ -14,21 +14,19 @@ void DFS(int up, int down)
 {
     while (true)
     {
-        if (Temp == arr[down])
+        if (up == arr[down])
         {
-            vec.push_back(Temp);
+            vec.push_back(up);
             break;
         }
 
         if (false == visited[down])
         {
             visited[down] = true;
-            DFS(down, arr[down]);
+            DFS(up, arr[down]);
         }
-        else
-        {
-            break;
-        }
+
+        break; // 이전에 탐색했던 곳을 다시 탐색할 경우 종료.
     }
 }
 
@@ -46,7 +44,6 @@ int main()
 
     for (int i = 1; i <= N; i++)
     {
-        Temp = i;
         DFS(i, arr[i]);
         memset(visited, false, sizeof(visited));
     }
