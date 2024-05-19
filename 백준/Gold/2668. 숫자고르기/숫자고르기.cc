@@ -12,21 +12,16 @@ vector<int> vec;
 
 void DFS(int up, int down)
 {
-    while (true)
+    if (up == arr[down]) // 찾으려고 하는 값(up)을 찾으면 종료
     {
-        if (up == arr[down]) // 찾으려고 하는 값(up)을 찾으면 종료
-        {
-            vec.push_back(up);
-            break;
-        }
+        vec.push_back(up);
+        return;
+    }
 
-        if (false == visited[down])
-        {
-            visited[down] = true;
-            DFS(up, arr[down]);
-        }
-
-        break; // 이전에 탐색했던 곳을 다시 탐색할 경우 종료.
+    if (false == visited[down])
+    {
+        visited[down] = true;
+        DFS(up, arr[down]);
     }
 }
 
