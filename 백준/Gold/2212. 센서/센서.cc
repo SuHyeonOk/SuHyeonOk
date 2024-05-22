@@ -30,7 +30,7 @@ int main(void)
 	sort(vec2.begin(), vec2.end());
 
 	int Ans = 0;
-	int Size = static_cast<int>(vec2.size()) - (K - 1);
+	int Size = (N - 1) - (K - 1);
 	for (int i = 0; i < Size; i++)
 	{
 		Ans += vec2[i];
