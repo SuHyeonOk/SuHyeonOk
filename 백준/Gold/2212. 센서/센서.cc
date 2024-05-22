@@ -9,12 +9,6 @@ int main(void)
 	cin >> N;
 	cin >> K;
 
-	if (K >= N)
-	{
-		cout << "0";
-		return 0;
-	}
-
 	vector<int> vec(N);
 	for (int i = 0; i < N; i++)
 	{
