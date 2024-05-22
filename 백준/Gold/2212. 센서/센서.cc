@@ -1,35 +1,54 @@
 #include <iostream>
 #include <vector>
+#include <queue>
 #include <algorithm>
 using namespace std;
 
-int main(void)
+int main()
 {
-	int N = 0, K = 0;
-	cin >> N;
-	cin >> K;
+    ios::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
 
-	vector<int> vec(N);
-	for (int i = 0; i < N; i++)
-	{
-		cin >> vec[i];
-	}
-	sort(vec.begin(), vec.end());
+    int N = 0, K = 0;
+    cin >> N >> K;
 
-	vector<int> vec2;
-	for (int i = 0; i < N - 1; i++)
-	{
-		vec2.push_back(vec[i + 1] - vec[i]);
-	}
-	sort(vec2.begin(), vec2.end());
+    vector<int> vec;
+    for (int i = 0; i < N; ++i)
+    {
+        int Temp;
+        cin >> Temp;
+        vec.push_back(Temp);
+    }
+    sort(vec.begin(), vec.end());
 
-	int Ans = 0;
-	int Size = (N - 1) - (K - 1);
-	for (int i = 0; i < Size; i++)
-	{
-		Ans += vec2[i];
-	}
-	cout << Ans;
+    priority_queue<int> Qs;
+    for (int i = 1; i < N; ++i)
+    {
+        if (vec[i] == vec[i - 1])
+        {
+            continue;
+        }
 
-	return 0;
+        int Distance = vec[i] - vec[i - 1];
+        Qs.push(Distance);
+    }
+
+    for (int i = 0; i < K - 1; ++i)
+    {
+        if (false == Qs.empty())
+        {
+            Qs.pop();
+        }
+    }
+
+    int Ans = 0;
+    while (false == Qs.empty())
+    {
+        Ans += Qs.top();
+        Qs.pop();
+    }
+
+    cout << Ans;
+
+    return 0;
 }
