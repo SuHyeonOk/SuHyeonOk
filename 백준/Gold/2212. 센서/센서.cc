@@ -21,31 +21,25 @@ int main()
     }
     sort(vec.begin(), vec.end());
 
-    priority_queue<int> Qs;
+    int Count = 1;
+    priority_queue<int, vector<int>, greater<int>> pq;
     for (int i = 1; i < N; ++i)
     {
         if (vec[i] == vec[i - 1])
         {
+            ++Count;
             continue;
         }
 
         int Distance = vec[i] - vec[i - 1];
-        Qs.push(Distance);
-    }
-
-    for (int i = 0; i < K - 1; ++i)
-    {
-        if (false == Qs.empty())
-        {
-            Qs.pop();
-        }
+        pq.push(Distance);
     }
 
     int Ans = 0;
-    while (false == Qs.empty())
+    for (int i = 0; i < (N - Count) - (K - 1); ++i)
     {
-        Ans += Qs.top();
-        Qs.pop();
+        Ans += pq.top();
+        pq.pop();
     }
 
     cout << Ans;
