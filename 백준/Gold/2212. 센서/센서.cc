@@ -1,35 +1,41 @@
 #include <iostream>
-#include <algorithm>
 #include <vector>
+#include <algorithm>
 using namespace std;
-int N, K;
-vector<int> v;
-vector<int> v2;
+
 int main(void)
 {
-
+	int N = 0, K = 0;
 	cin >> N;
 	cin >> K;
 
 	if (K >= N)
 	{
-		cout <<"0";
+		cout << "0";
 		return 0;
 	}
+
+	vector<int> vec(N);
 	for (int i = 0; i < N; i++)
 	{
-		int n;
-		cin >> n;
-		v.push_back(n);
+		cin >> vec[i];
 	}
-	sort(v.begin(), v.end());
+	sort(vec.begin(), vec.end());
+
+	vector<int> vec2;
 	for (int i = 0; i < N - 1; i++)
-		v2.push_back(v[i + 1] - v[i]);
+	{
+		vec2.push_back(vec[i + 1] - vec[i]);
+	}
+	sort(vec2.begin(), vec2.end());
 
-	sort(v2.begin(), v2.end());
+	int Ans = 0;
+	int Size = static_cast<int>(vec2.size()) - (K - 1);
+	for (int i = 0; i < Size; i++)
+	{
+		Ans += vec2[i];
+	}
+	cout << Ans;
 
-	int res = 0;
-	for (int i = 0; i < v2.size() - (K - 1); i++)
-		res += v2[i];
-	cout << res;
+	return 0;
 }
