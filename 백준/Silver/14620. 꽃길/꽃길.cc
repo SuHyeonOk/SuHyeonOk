@@ -12,22 +12,22 @@ bool visited[MAX][MAX];
 int dx[4] = { 0,0,-1,1 };
 int dy[4] = { -1,1,0,0 };
 
-void DFS(int sum, int cnt) 
+void DFS(int _Sum, int _Depth) 
 {
-	if (cnt == 3) 
+	if (_Depth == 3) 
 	{
-		Result = min(Result, sum); 
+		Result = min(Result, _Sum); 
 		return;
 	}
 
-	for (int i = 0; i < N; i++) 
+	for (int i = 1; i < N; i++) 
 	{
-		for (int j = 0; j < N; j++) 
+		for (int j = 1; j < N; j++) 
 		{
 			int check = 0;
 			int nx = 0, ny = 0;
 
-			for (int k = 0; k < 4; k++) 
+			for (int k = 0; k < 4; k++) // 4개의 꽃잎이 필 수 있는 경우인지 확인
 			{
 				nx = j + dx[k];
 				ny = i + dy[k];
@@ -47,30 +47,29 @@ void DFS(int sum, int cnt)
 
 			if (check == 4) 
 			{
-				int ssum = map[i][j];
+				int Temp = map[i][j];
+				visited[i][j] = true; // 꽃잎이 겹치는지 확인하기 위해
 				for (int k = 0; k < 4; k++) 
 				{
 					nx = j + dx[k];
 					ny = i + dy[k];
 					visited[ny][nx] = true;
-					ssum += map[ny][nx];
+					Temp += map[ny][nx];
 				}
 
-				visited[i][j] = true;
-				sum += ssum;
-				cnt++;
-				DFS(sum, cnt);
-				sum -= ssum;
-				cnt--;
+				_Depth++;
+				_Sum += Temp;
+				DFS(_Sum, _Depth);
+				_Sum -= Temp;
+				_Depth--;
 
+				visited[i][j] = false; // DFS를 나오면서 꽃 하나 제거
 				for (int k = 0; k < 4; k++) 
 				{
 					nx = j + dx[k];
 					ny = i + dy[k];
-					visited[ny][nx] = 0;
+					visited[ny][nx] = false;
 				}
-
-				visited[i][j] = false;
 			}
 		}
 	}
