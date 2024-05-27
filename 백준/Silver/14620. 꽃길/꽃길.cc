@@ -34,12 +34,12 @@ void DFS(int sum, int cnt)
 
 				if (nx < 0 || nx >= N || ny < 0 || ny >= N)
 				{
-					continue;
+					break;
 				}
 
 				if (true == visited[ny][nx])
 				{
-					continue;
+					break;
 				}
 
 				check++;
