@@ -1,42 +1,42 @@
-#include <algorithm>
 #include <iostream>
 #include <vector>
+#include <algorithm>
 using namespace std;
- 
-int N, L, answer;
-vector<pair<int, int>> pools;
- 
-int main() 
+
+int main()
 {
     ios::sync_with_stdio(false);
     cin.tie(NULL); cout.tie(NULL);
-    
+
+    int N = 0, L = 0;
     cin >> N >> L;
-    for (int i = 0; i < N; ++i) 
+
+    vector<pair<int, int>> vec(N);
+    int Start = 0, End = 0;
+    for (int i = 0; i < N; ++i)
     {
-        int start, end;
-        cin >> start >> end;
-        pools.push_back({start, end});
+        cin >> Start >> End;
+        vec[i] = { Start, End };
     }
-    
-    sort(pools.begin(), pools.end());
-    
-    int next = 0;
-    for (int i = 0; i < pools.size(); ++i) 
+
+    sort(vec.begin(), vec.end());
+
+    int Next = 0, Count = 0;
+    for (int i = 0; i < N; ++i)
     {
-        if (next < pools[i].first)
+        if (Next < vec[i].first)
         {
-            next = pools[i].first;
+            Next = vec[i].first;
         }
-        
-        while(next < pools[i].second) 
+
+        while (Next < vec[i].second)
         {
-            next += L;
-            answer++;
+            Next += L;
+            Count++;
         }
     }
-    
-    cout << answer;
-    
+
+    cout << Count;
+
     return 0;
 }
