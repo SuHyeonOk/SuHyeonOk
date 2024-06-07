@@ -35,13 +35,8 @@ int main()
 	{
 		Min = t[N - 1];	// 마지막 가장 큰 값을 따로 저장
 		N--;
-
-		Comparison();
 	}
-	else // 짝수
-	{
-		Comparison();
-	}
+	Comparison();
 
 	cout << Min;
 
