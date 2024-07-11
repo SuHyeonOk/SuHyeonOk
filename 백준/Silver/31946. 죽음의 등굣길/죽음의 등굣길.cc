@@ -1,26 +1,28 @@
 #include <iostream>
 #include <queue>
-#define MAX 101
+#define MAX 100
 using namespace std;
 
 int N, M, Jump;
-int MAP[MAX][MAX];
-bool Visited[MAX][MAX];
-int MoveY[4] = { -1,0,1,0 };
-int MoveX[4] = { 0,-1,0,1 };
-int ManhattanY[4] = { 1,1,-1,-1 };
-int ManhattanX[4] = { -1,1,1,-1 };
+int arr[MAX][MAX];
+bool visited[MAX][MAX];
 
-bool BFS() {
-    queue<pair<int, int> > Q;
-    Q.push(make_pair(0, 0));
-    Visited[0][0] = true;
+int dy[4] = { -1, 0, 1, 0 };
+int dx[4] = { 0, -1, 0, 1 };
+int manhattanY[4] = { 1, 1, -1, -1 };
+int manhattanX[4] = { -1, 1, 1, -1 };
 
-    while (!Q.empty()) 
+bool BFS() 
+{
+    queue<pair<int, int> > q;
+    q.push(make_pair(0, 0));
+    visited[0][0] = true;
+
+    while (false == q.empty()) 
     {
-        int X = Q.front().first;
-        int Y = Q.front().second;
-        Q.pop();
+        int X = q.front().first;
+        int Y = q.front().second;
+        q.pop();
 
         if ((X == (N - 1)) && (Y == (M - 1)))
         {
@@ -31,22 +33,26 @@ bool BFS() {
         {
             for (int j = 0; j < 4; j++) 
             {
-                int NX = X + (MoveY[j] * i);
-                int NY = Y + (MoveX[j] * i);
+                int NX = X + (dy[j] * i);
+                int NY = Y + (dx[j] * i);
 
                 for (int k = 0; k < i; k++) 
                 {
-                    int NNX = NX + (ManhattanY[j] * k);
-                    int NNY = NY + (ManhattanX[j] * k);
+                    int NNX = NX + (manhattanY[j] * k);
+                    int NNY = NY + (manhattanX[j] * k);
 
-                    if ((NNX >= 0) && (NNX < N) && 
-                        (NNY >= 0) && (NNY < M) && 
-                        !Visited[NNX][NNY] &&
-                        (MAP[NNX][NNY] == MAP[X][Y])) 
+                    if (NNX < 0 || NNX >= N || NNY < 0 || NNY >= M)
                     {
-                        Visited[NNX][NNY] = true;
-                        Q.push({ NNX, NNY });
+                        continue;
                     }
+
+                    if(true == visited[NNX][NNY] || arr[NNX][NNY] != arr[X][Y])
+                    {
+                        continue;
+                    }
+
+                    visited[NNX][NNY] = true;
+                    q.push({ NNX, NNY });
                 }
             }
         }
@@ -62,20 +68,22 @@ int main()
 
     cin >> N;
     cin >> M;
-    for (int i = 0; i < N; i++) {
-        for (int j = 0; j < M; j++) {
-            cin >> MAP[i][j];
+    for (int i = 0; i < N; i++) 
+    {
+        for (int j = 0; j < M; j++) 
+        {
+            cin >> arr[i][j];
         }
     }
     cin >> Jump;
 
     if (true == BFS()) 
     {
-        cout << "ALIVE\n";
+        cout << "ALIVE";
     }
     else 
     {
-        cout << "DEAD\n";
+        cout << "DEAD";
     }
 
     return 0;
