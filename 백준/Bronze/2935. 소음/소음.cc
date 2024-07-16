@@ -11,30 +11,29 @@ int main()
     char oper = ' ';
     cin >> a >> oper >> b;
 
-    int len_a = a.length();
-    int len_b = b.length();
+    int ALength = a.length();
+    int BLength = b.length();
 
-    switch (oper)
+    if (oper == '+')
     {
-    case '+':
-        if (len_a >= len_b)
+        if (ALength >= BLength)
         {
-            a[len_a - len_b] = a[len_a - len_b] + 1;
+            a[ALength - BLength] = a[ALength - BLength] + 1;
             cout << a;
         }
         else
         {
-            b[len_b - len_a] = '1';
+            b[BLength - ALength] = '1';
             cout << b;
         }
-        break;
-    case '*':
-        for (int i = 1; i < len_b; ++i)
+    }
+    else
+    {
+        for (int i = 1; i < BLength; ++i)
         {
             a += '0';
         }
         cout << a;
-        break;
     }
 
     return 0;
