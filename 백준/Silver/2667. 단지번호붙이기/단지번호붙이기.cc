@@ -9,6 +9,7 @@ int N;
 char arr[MAX][MAX];
 bool visited[MAX][MAX];
 vector<int> result;
+
 int dx[4]{ 0, 0, -1, 1 };
 int dy[4]{ -1, 1, 0, 0 };
 
@@ -70,23 +71,21 @@ int main()
         }
     }
 
-    int Total = 0;
     for (int y = 0; y < N; ++y)
     {
         for (int x = 0; x < N; ++x)
         {
             if (false == visited[y][x] && '1' == arr[y][x])
             {
-                ++Total;
                 BFS(x, y);
             }
         }
     }
 
-    cout << Total << '\n';
     sort(result.begin(), result.end());
-    Total = result.size();
-    for (int i = 0; i < Total; ++i)
+    size_t Size = result.size();
+    cout << Size << '\n';
+    for (int i = 0; i < Size; ++i)
     {
         cout << result[i] << '\n';
     }
