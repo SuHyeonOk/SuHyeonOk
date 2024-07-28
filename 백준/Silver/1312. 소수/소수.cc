@@ -9,14 +9,13 @@ int main()
 	int A = 0, B = 0, N = 0;
 	cin >> A >> B >> N;
 
-	int Result = 0;
 	while (N--) 
 	{
 		A %= B;
 		A *= 10;
-		Result = A / B;
 	}
-	cout << Result;
+
+	cout << A / B;
 
     return 0;
 }
