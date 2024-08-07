@@ -2,44 +2,44 @@
 #include <cmath>
 using namespace std;
 
-int main() 
+bool IsDecimal(unsigned int N)
 {
-    ios::sync_with_stdio(false);
-    cin.tie(NULL); cout.tie(NULL);
+	if (N < 2)
+	{
+		return false; // 2보다 작은 경우 소수 아님
+	}
 
-    long long TestCase = 0;
-    cin >> TestCase;
+	int SqrtN = sqrt(N);
+	for (unsigned int i = 2; i <= SqrtN; i++)
+	{
+		if (0 == N % i)
+		{
+			return false; // 나눠지면 소수 아님
+		}
+	}
 
-    long long N = 0, M = 0, Ans = 0;
-    for (int t = 0; t < TestCase; t++) 
-    {
-        cin >> N;
+	return true; // 소수
+}
 
-        bool Temp = (N < 3) ? 1 : 0;
-        Ans = (N < 3) ? 2 : N;
+int main()
+{
+	ios::sync_with_stdio(false);
+	cin.tie(NULL); cout.tie(NULL);
 
-        while (false == Temp) 
-        {
-            M = sqrt(N) + 1;
+	int TestCase = 0;
+	cin >> TestCase;
 
-            for (int i = 2; i <= M; i++) 
-            {
-                if (N % i == 0)
-                {
-                    break;
-                }
+	unsigned int N = 0;
+	while (TestCase--)
+	{
+		cin >> N;
 
-                if (i == M) 
-                {
-                    Ans = N;
-                    Temp = true;
-                }
-            }
-            N++;
-        }
+		while (false == IsDecimal(N))
+		{
+			++N; // 소수가 아닌 경우 ++을 통해 다음 수를 계산
+		}
+		cout << N << '\n';
+	}
 
-        cout << Ans << '\n';
-    }
-
-    return 0;
+	return 0;
 }
