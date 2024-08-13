@@ -10,7 +10,7 @@ int main()
 	int N = 0;
 	cin >> N;
 
-	int arr[505][505];
+	int arr[500][500]{ 0 };
 	for (int i = 0; i < N; i++)
 	{
 		for (int j = 0; j < i + 1; j++)
