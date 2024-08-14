@@ -1,90 +1,92 @@
 #include <iostream>
-#include <vector>
 #include <queue>
+#include <algorithm>
+#define MAX 1000
 using namespace std;
 
-int M{ 0 }, N{ 0 }, iDday{ 0 };
-vector<vector<int>> vec;
-vector<int> dx{ 0, 0, -1, 1 };
-vector<int> dy{ -1, 1, 0, 0 };
-
-typedef struct tagInfo
+typedef struct tagTomatoInfo
 {
-	int x{ 0 };
-	int y{ 0 };
-	int Dday{ 0 };
-
+	int XPos = 0;
+	int YPos = 0;
+	int Day = 0;
 }INFO;
+
+int M, N, Max;
+int arr[MAX][MAX];
+bool visited[MAX][MAX];
 queue<INFO> q;
+
+int dx[4]{ 0, 0, -1, 1 };
+int dy[4]{ -1, 1, 0, 0 };
 
 void BFS()
 {
 	while (false == q.empty())
 	{
-		int qX{ q.front().x };
-		int qY{ q.front().y };
-		int qDday{ q.front().Dday };
+		int X = q.front().XPos;
+		int Y = q.front().YPos;
+		int Count = q.front().Day + 1;
+		Max = max(Max, Count);
 		q.pop();
 
-		if (iDday == qDday)
+		for (int i = 0; i < 4; ++i)
 		{
-			++iDday;
-		}
+			int NX = X + dx[i];
+			int NY = Y + dy[i];
 
-		for (int i = 0; i < 4; i++)
-		{
-			int nextX{ qX + dx[i] };
-			int nextY{ qY + dy[i] };
-
-			if (nextX >= N || nextX < 0 || nextY >= M || nextY < 0)
+			if (0 > NX || M <= NX || 0 > NY || N <= NY)
 			{
 				continue;
 			}
 
-			if (vec[nextX][nextY] == 0)
+			if (true == visited[NY][NX] || -1 == arr[NY][NX] || 1 == arr[NY][NX])
 			{
-				vec[nextX][nextY] = iDday;
-				q.push({ nextX , nextY, qDday + 1 });
+				continue;
 			}
+
+			visited[NY][NX] = true;
+			arr[NY][NX] = Count;
+			q.push({ NX, NY,  Count});
 		}
 	}
-
 }
 
 int main()
 {
+	ios::sync_with_stdio(false);
+	cin.tie(NULL); cout.tie(NULL);
+
 	cin >> M >> N;
 
-	vec.resize(N, vector<int>(M, 0));
-
-	for (int i = 0; i < N; i++)
+	for (int y = 0; y < N; ++y)
 	{
-		for (int j = 0; j < M; j++)
+		for (int x = 0; x < M; ++x)
 		{
-			cin >> vec[i][j];
+			cin >> arr[y][x];
 
-			if (vec[i][j] == 1)
+			if (1 == arr[y][x])
 			{
-				q.push({ i, j, 0 });
+				q.push({ x, y, 0 });
+				visited[y][x] = true;
 			}
 		}
 	}
 
 	BFS();
 
-	for (int i = 0; i < N; i++)
+	for (int y = 0; y < N; ++y)
 	{
-		for (int j = 0; j < M; j++)
+		for (int x = 0; x < M; ++x)
 		{
-			if (vec[i][j] == 0)
+			if (0 == arr[y][x])
 			{
 				cout << -1;
 				return 0;
 			}
 		}
 	}
-	
-	cout << iDday - 1;
+
+	cout << Max - 1;
 
 	return 0;
 }
