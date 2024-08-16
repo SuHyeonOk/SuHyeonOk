@@ -1,98 +1,147 @@
 #include <iostream>
-#include <vector>
-#include <algorithm>
+#include <queue>
+#include <string.h>
+#define MAX 101
 using namespace std;
 
-int N{ 0 }, result{ 0 };
-vector<vector<char>> vec;
-vector<vector<bool>> visited;
-vector<int> dx{ 0, 0, -1, 1 };
-vector<int> dy{ -1, 1, 0, 0 };
-char current{ ' ' };
+int N;
+char arr[MAX][MAX];
+bool visited[MAX][MAX];
+int dx[4]{ 0, 0, -1, 1 };
+int dy[4]{ -1, 1, 0, 0 };
 
-void DFS(int _x, int _y)
+void BFS(char _Color, int _x, int _y)
 {
-	for (int i = 0; i < 4; i++)
-	{
-		int nx{ _x + dx[i] }, ny{ _y + dy[i] };
+    queue<pair<int, int>> q;
+    q.push({ _x, _y });
+    visited[_y][_x] = true;
 
-		if (nx < 0 || nx >= N || ny < 0 || ny >= N)
-		{
-			continue;
-		}
+    while (false == q.empty())
+    {
+        int X = q.front().first;
+        int Y = q.front().second;
+        q.pop();
 
-		if (true == visited[nx][ny] || current != vec[nx][ny])
-		{
-			continue;
-		}
+        for (int i = 0; i < 4; ++i)
+        {
+            int NX = X + dx[i];
+            int NY = Y + dy[i];
 
-		visited[nx][ny] = true;
-		DFS(nx, ny);
-	}
+            if (0 > NX || N <= NX || 0 > NY || N <= NY)
+            {
+                continue;
+            }
+
+            if (true == visited[NY][NX])
+            {
+                continue;
+            }
+
+            if (_Color != arr[NY][NX])
+            {
+                continue;
+            }
+
+            visited[NY][NX] = true;
+            q.push({ NX, NY });
+        }
+    }
+}
+
+void BFS2(char _Color, int _x, int _y)
+{
+    queue<pair<int, int>> q;
+    q.push({ _x, _y });
+    visited[_y][_x] = true;
+
+    while (false == q.empty())
+    {
+        int X = q.front().first;
+        int Y = q.front().second;
+        q.pop();
+
+        for (int i = 0; i < 4; ++i)
+        {
+            int NX = X + dx[i];
+            int NY = Y + dy[i];
+
+            if (0 > NX || N <= NX || 0 > NY || N <= NY)
+            {
+                continue;
+            }
+
+            if (true == visited[NY][NX])
+            {
+                continue;
+            }
+
+            if (_Color == 'R' || _Color == 'G')
+            {
+                if (arr[NY][NX] == 'B')
+                {
+                    continue;
+                }
+            }
+
+            if (_Color == 'B')
+            {
+                if (arr[NY][NX] == 'R' || arr[NY][NX] == 'G')
+                {
+                    continue;
+                }
+            }
+
+            visited[NY][NX] = true;
+            q.push({ NX, NY });
+        }
+    }
 }
 
 int main()
 {
-	cin >> N;
+    ios::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
 
-	vec.resize(N, vector<char>(N));
-	visited.resize(N, vector<bool>(N));
+    cin >> N;
 
-	for (int i = 0; i < N; i++)
-	{
-		for (int j = 0; j < N; j++)
-		{
-			cin >> vec[i][j];
-		}
-	}
+    for (int y = 0; y < N; ++y)
+    {
+        for (int x = 0; x < N; ++x)
+        {
+            cin >> arr[y][x];
+        }
+    }
 
-	for (int i = 0; i < N; i++)
-	{
-		for (int j = 0; j < N; j++)
-		{
-			if (false == visited[i][j])
-			{
-				current = vec[i][j];
-				++result;
-				DFS(i, j);
-			}
-		}
-	}
+    int Count = 0;
+    for (int y = 0; y < N; ++y)
+    {
+        for (int x = 0; x < N; ++x)
+        {
+            if (false == visited[y][x])
+            {
+                ++Count;
+                BFS(arr[y][x], x, y);
+            }
+        }
+    }
 
-	cout << result << " ";
-	result = 0;
+    cout << Count << ' ';
+    memset(visited, false, sizeof(visited));
 
-	for (int i = 0; i < N; i++)
-	{
-		fill(visited[i].begin(), visited[i].end(), false);
-	}
+    Count = 0;
+    for (int y = 0; y < N; ++y)
+    {
+        for (int x = 0; x < N; ++x)
+        {
+            if (false == visited[y][x])
+            {
+                ++Count;
+                BFS2(arr[y][x], x, y);
+            }
+        }
+    }
 
+    cout << Count;
 
-	for (int i = 0; i < N; i++)
-	{
-		for (int j = 0; j < N; j++)
-		{
-			if ('G' == vec[i][j])
-			{
-				vec[i][j] = 'R';
-			}
-		}
-	}
-
-	for (int i = 0; i < N; i++)
-	{
-		for (int j = 0; j < N; j++)
-		{
-			if (false == visited[i][j])
-			{
-				current = vec[i][j];
-				++result;
-				DFS(i, j);
-			}
-		}
-	}
-
-	cout << result;
-
-	return 0;
+    return 0;
 }
