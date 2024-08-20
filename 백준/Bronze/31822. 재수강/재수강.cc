@@ -11,7 +11,6 @@ int main()
     cin >> MyString;
 
     MyString = MyString.substr(0, 5);
-    int MyInt = stoi(MyString);
     
     int N = 0;
     cin >> N;
@@ -21,9 +20,8 @@ int main()
     for (int i = 0; i < N; ++i)
     {
         cin >> Input;
-        Input = Input.substr(0, 5);
 
-        if (stoi(Input) == MyInt)
+        if (MyString == Input.substr(0, 5))
         {
             ++Count;
         }
