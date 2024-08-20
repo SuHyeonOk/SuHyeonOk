@@ -1,35 +1,33 @@
 #include <iostream>
-#define MAX 9
 using namespace std;
 
 int N, M;
-int num[MAX];
-bool visited[MAX];
+int arr[8];
+bool visited[8];
 
-void DFS(int _depth)
+void Backtracking(int _Depth)
 {
-    if (_depth == M)
+    if (_Depth == M)
     {
-        for (int i = 0; i < M; i++)
+        for (int i = 0; i < M; ++i)
         {
-            cout << num[i] << " ";
+            cout << arr[i] << ' ';
         }
-
         cout << '\n';
-        return;
     }
 
-    for (int i = 1; i <= N; i++)
+    for (int i = 0; i < N; ++i)
     {
-        if (visited[i] == false)
+        if (false == visited[i])
         {
             visited[i] = true;
-            num[_depth] = i;
-            DFS(_depth + 1);
+            arr[_Depth] = i + 1;
+            Backtracking(_Depth + 1);
             visited[i] = false;
         }
     }
 
+    return;
 }
 
 int main()
@@ -39,7 +37,7 @@ int main()
 
     cin >> N >> M;
 
-    DFS(0);
+    Backtracking(0);
 
     return 0;
 }
