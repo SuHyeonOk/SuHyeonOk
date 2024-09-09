@@ -18,7 +18,7 @@ int main()
     for (size_t i = 0; i < DocumentSize;)
     {
         string Temp = Document.substr(i, WordSize);
-        if (0 == Word.compare(Temp))
+        if (Word == Temp)
         {
             ++Result;
             i += WordSize;
