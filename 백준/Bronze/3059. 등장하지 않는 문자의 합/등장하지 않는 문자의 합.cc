@@ -1,39 +1,38 @@
 #include <iostream>
-#include <string>
- using namespace std;
- 
-int main() 
+#include <string.h>
+using namespace std;
+
+int main()
 {
-    int test;
-    cin>>test;
- 
-    for(int i=0; i<test; i++)
+    ios::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
+
+    int T = 0;
+    cin >> T;
+
+    int arr[26]{ 0 };
+    string Input = "";
+    while (T--)
     {
- 
-        string str;
-        cin>>str;
- 
-        int len = str.length();
- 
-        int arr[26]={0};
-        int cnt=0;
- 
-        for(int i=0; i<len; i++)
+        cin >> Input;
+
+        size_t Length = Input.length();
+        for (size_t i = 0; i < Length; ++i)
         {
-            cnt = str[i] - 65;  
-            arr[cnt]++;         
+            arr[Input[i] - 'A'] = static_cast<int>(Input[i]);
         }
- 
-        int sum=0;
- 
-        for(int i=0; i<26; i++)
+
+        int Result = 0;
+        for (int i = 0; i < 26; ++i)
         {
-            if(arr[i]==0)
+            if (0 != arr[i])
             {
-                sum+=i+65;
+                Result += arr[i];
             }
         }
-        cout<<sum<<"\n";
+        cout << 2015 - Result << '\n';
+        memset(arr, 0, sizeof(arr));
     }
+
     return 0;
 }
