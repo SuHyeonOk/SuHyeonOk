@@ -1,82 +1,32 @@
 #include <iostream>
+#include <vector>
 using namespace std;
 
-
-int main()
+int main() 
 {
-   int n;
-   
-   cin >> n;
-   
-   for (int i = 1; i <= 2 * n - 1; i++)
-   {
-       for(int j = 1; j <= i - 1; j++)
-       {
-            if (j % 2)
-                cout << '*';
-            else
-                cout << ' ';
-       }
-       for(int j = 1; j <= 2 * (2 * n - 1 - (i - 1)) - 1; j++)
-       {
-            if (i % 2)
-                cout << '*';
-            else
-                cout << ' ';
-       }
-       for(int j = 1; j <= i - 1; j++)
-       {
-            if (i % 2)
-            {
-                if (j % 2)
-                    cout << ' ';
-                else
-                    cout << '*';
-            }
-            else
-            {
-                if (j % 2)
-                    cout << '*';
-                else
-                    cout << ' ';
-            }
-       }
-       cout << '\n';
-   }
-   
-   for (int i = 1; i <= 2 * n - 2; i++)
-   {
-       for(int j = 1; j <= 2 * n - 2 - i; j++)
-       {
-            if (j % 2)
-                cout << '*';
-            else
-                cout << ' ';
-       }
-       for(int j = 1; j <= 2 * i + 1; j++)
-       {
-            if (i % 2)
-                cout << ' ';
-            else
-                cout << '*';
-       }
-       for(int j = 1; j <= 2 * n - 2 - i; j++)
-       {
-            if (i % 2)
-            {
-                if (j % 2)
-                    cout << '*';
-                else
-                    cout << ' ';
-            }
-            else
-            {
-                if (j % 2)
-                    cout << ' ';
-                else
-                    cout << '*';
-            }
-       }
-       cout << '\n';
-   }
+    ios::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
+
+    int n = 0;
+    cin >> n;
+
+    auto size{ 4 * n - 3 };
+    vector<string> stars(size, string(size, ' '));
+
+    for (int k = 1; k <= n; ++k) 
+    {
+        int b = 2 * (n - k);
+        int e = size - 1 - b;
+
+        for (int i = 0; i < 4 * k - 3; ++i) 
+        {
+            stars[b][b + i] = stars[b + i][b] = '*';
+            stars[e][b + i] = stars[b + i][e] = '*';
+        }
+    }
+
+    for (const auto& s : stars) 
+    {
+        cout << s << '\n';
+    }
 }
