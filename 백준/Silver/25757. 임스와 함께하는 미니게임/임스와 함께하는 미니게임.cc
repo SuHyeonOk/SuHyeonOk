@@ -2,28 +2,36 @@
 #include <set>
 using namespace std;
 
-int main() 
+int main()
 {
-    int n;
-    char game;
-    set<string> s;
-    
-    cin >> n >> game;
-    for(int i=0; i<n; i++) {                                                            
-        string str;
-        cin >> str;
-        s.insert(str);
+    ios::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
+
+    int N = 0;
+    cin >> N;
+
+    char Game = ' ';
+    cin >> Game;
+
+    string Name = "";
+    set<string> names;
+    while (N--)
+    {
+        cin >> Name;
+        names.insert(Name);
     }
-    
-        if(game == 'Y') {
-        cout << s.size();
+
+    int Type = 1;
+    if (Game == 'F')
+    {
+        Type = 2;
     }
-    else if(game == 'F') {
-        cout << s.size()/2;
+    else if (Game == 'O')
+    {
+        Type = 3;
     }
-    else {
-        cout << s.size()/3;
-    }
-    
+
+    cout << names.size() / Type;
+
     return 0;
 }
