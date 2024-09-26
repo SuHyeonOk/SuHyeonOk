@@ -10,7 +10,7 @@ int main()
     int n = 0;
     cin >> n;
 
-    auto size{ 4 * n - 3 };
+    int size{ 4 * n - 3 };
     vector<string> stars(size, string(size, ' '));
 
     for (int k = 1; k <= n; ++k) 
