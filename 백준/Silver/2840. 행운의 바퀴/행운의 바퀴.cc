@@ -26,7 +26,7 @@ int main()
             Index = N;
         }
 
-        // 이미 배열에 값이 들어갔는데 이전에 들어간 값과 다르다면 바퀴를 알 수 없음.
+        // 1. 이미 값이 들어있고, 그 값이 다른 경우는 불가능
         if ('?' != arr[Index] && Alphabet != arr[Index])
         {
             Lucky = false;
@@ -37,24 +37,9 @@ int main()
         Temp = Index;
     }
 
+    // 2. 같은 글자는 두 번 이상 등장하면 안 된다.
     bool visited[26]{ false };
-    for (int i = Temp; i > 0; --i)
-    {
-        if ('?' == arr[i])
-        {
-            continue;
-        }
-
-        if (false == visited[arr[i] - 'A'])
-        {
-            visited[arr[i] - 'A'] = true;
-        }
-        else
-        {
-            Lucky = false;
-        }
-    }
-    for (int i = N; i > Temp; --i)
+    for (int i = 1; i <= N; ++i)
     {
         if ('?' == arr[i])
         {
