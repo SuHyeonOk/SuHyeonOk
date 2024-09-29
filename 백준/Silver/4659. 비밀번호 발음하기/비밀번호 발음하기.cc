@@ -16,9 +16,9 @@ int main()
             break;
         }
 
-        int Vowel = 0, Consonant = 0; // 모음 자음
         bool Find = false;
         char Temp = ' ';
+        int Vowel = 0, Consonant = 0; // 모음 자음
         string Print = "is acceptable.";
         size_t Length = Input.length();
         for (size_t i = 0; i < Length; ++i)
@@ -47,10 +47,6 @@ int main()
             }
 
             Temp = Input[i];
-            if (Temp == 'e' || Temp == 'o')
-            {
-                Temp = ' ';
-            }
         }
 
         if (false == Find || Vowel >= 3 || Consonant >= 3)
