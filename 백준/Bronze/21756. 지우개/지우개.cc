@@ -31,7 +31,7 @@ int main()
         }
 
         ++Count;
-        if (N <= Count)
+        if (N < Count)
         {
             --N;
             Count = N;
