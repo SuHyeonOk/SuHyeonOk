@@ -17,7 +17,7 @@ int main()
     }
     
     int Count = 1;
-    while (1 < dq.size())
+    while (1 != dq.size())
     {
         if (Count % 2 != 0) // 홀수
         {
@@ -33,8 +33,8 @@ int main()
         ++Count;
         if (N < Count)
         {
-            --N;
-            Count = N;
+            N = (N / 2);
+            Count = 1;
         }
     }
 
