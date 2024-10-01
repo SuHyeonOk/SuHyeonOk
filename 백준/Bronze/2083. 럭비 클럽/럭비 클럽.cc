@@ -1,32 +1,32 @@
 #include <iostream>
-#include <algorithm>
-#include <string>
 using namespace std;
-
-string name;
-int age, weight;
 
 int main()
 {
-	ios::sync_with_stdio(0);
-	cin.tie(0);	cout.tie(0);
+    ios::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
 
-	while (true) 
+    string Name = "";
+    int Age = 0, Weight = 0;
+
+    while (true)
     {
-		cin >> name >> age >> weight;
-        
-		if (name == "#" && age == 0 && weight == 0) 
+        cin >> Name >> Age >> Weight;
+
+        if (Name == "#")
         {
             break;
         }
-        
-		if (age > 17 || weight >= 80) 
+
+        if (Age > 17 || Weight >= 80)
         {
-            cout << name << " Senior" << '\n';
+            cout << Name << " Senior" << '\n';
         }
-		else 
+        else
         {
-            cout << name << " Junior" << '\n';
+            cout << Name << " Junior" << '\n';
         }
-	}
+    }
+
+    return 0;
 }
