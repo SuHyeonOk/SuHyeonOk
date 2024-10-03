@@ -1,25 +1,53 @@
-#include <bits/stdc++.h>
-#define MAX 1000010
-#define INF 2147483647
-#define MOD 10000
-typedef long long ll;
+#include <iostream>
+#include <queue>
+#define MAX 1000001
 using namespace std;
-//
 
-int a, k;
-int dp[MAX]; // dp[n] = a에서 n까지 필요한 최소 연산 횟수
+int A, K;
+bool visited[MAX];
 
-int main() {
-    ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
+int BFS()
+{
+    queue<pair<int, int>> q;
+    q.push({ K, 0 });
+    visited[K] = true;
 
-    cin >> a >> k;
+    while (false == q.empty())
+    {
+        int Temp = q.front().first;
+        int Depth = q.front().second;
+        q.pop();
 
-    for(int i = a+1; i <= k; i++) {
-        dp[i] = dp[i-1] + 1;
-        if(i % 2 == 0 && i / 2 >= a) dp[i] = min(dp[i], dp[i/2]+1);
+        if (Temp == A)
+        {
+            return Depth;
+        }
+
+        // K에서 A로 가는 경우, 1을 뺀다.
+        if (Temp - 1 >= A && false == visited[Temp - 1])
+        {
+            visited[Temp - 1] = true;
+            q.push({ Temp - 1, Depth + 1 });
+        }
+        // 짝수인 경우 2로 나누는 연산
+        if (Temp % 2 == 0 && Temp / 2 >= A && false == visited[Temp / 2])
+        {
+            visited[Temp / 2] = true;
+            q.push({ Temp / 2, Depth + 1 });
+        }
     }
 
-    cout << dp[k];
+    return 0;
+}
+
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
+
+    cin >> A >> K;
+
+    cout << BFS();
 
     return 0;
 }
