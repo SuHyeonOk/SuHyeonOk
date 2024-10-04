@@ -9,31 +9,30 @@ int main()
     int A = 0, B = 0, C = 0, M = 0;
     cin >> A >> B >> C >> M;
 
-    if (A > M) 
+    if (A > M)
     {
-        cout << 0 << endl;
+        cout << 0;
         return 0;
     }
 
-    int Time = 0, Sum = 0, Result = 0;
-    while (Time < 24) 
+    int Fatigue = 0, Work = 0;
+    for(int i = 0; i < 24; ++i)
     {
-        if (Sum + A > M) 
+        if (Fatigue + A > M)
         {
-            Sum -= C;
-            if (Sum < 0)
+            Fatigue -= C;
+            if (Fatigue < 0)
             {
-                Sum = 0;
+                Fatigue = 0;
             }
+            continue;
         }
-        else
-        {
-            Sum += A;
-            Result += B;
-        }
-        Time++;
+
+        Work += B;
+        Fatigue += A;
     }
-    cout << Result << endl;
+
+    cout << Work;
 
     return 0;
 }
