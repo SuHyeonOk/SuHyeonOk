@@ -9,12 +9,6 @@ int main()
     int A = 0, B = 0, C = 0, M = 0;
     cin >> A >> B >> C >> M;
 
-    if (A > M)
-    {
-        cout << 0;
-        return 0;
-    }
-
     int Fatigue = 0, Work = 0;
     for(int i = 0; i < 24; ++i)
     {
