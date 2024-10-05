@@ -1,114 +1,84 @@
 #include <iostream>
 #include <queue>
+#include <string.h>
+#define MAX 100
 using namespace std;
 
-int T, H, W;
-const int MAX = 101;
-int map[MAX][MAX];
+int H, W;
+char arr[MAX][MAX];
 bool visited[MAX][MAX];
-int dy[] = { 0,0,-1,1 };
-int dx[] = { -1,1,0,0 };
-queue<pair<int, int>> q;
-int ans[MAX];
-int cnt = 0;
+int dx[4]{ 0, 0, -1, 1 };
+int dy[4]{ -1, 1, 0 , 0 };
 
-void BFS(int y, int x) 
+void BFS(int _x, int _y)
 {
-    visited[y][x] = true;
-    q.push(make_pair(y, x));
+    queue<pair<int, int>> q;
+    q.push({ _x, _y });
+    visited[_y][_x] = true;
 
-    while (false == q.empty()) 
+    while (false == q.empty())
     {
-        y = q.front().first;
-        x = q.front().second;
+        int X = q.front().first;
+        int Y = q.front().second;
         q.pop();
 
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 4; ++i)
         {
-            int ny = y + dy[i];
-            int nx = x + dx[i];
+            int NX = X + dx[i];
+            int NY = Y + dy[i];
 
-            if (ny < 0 || nx < 0 || ny >= H || nx >= W)
+            if (NX < 0 || NX >= W || NY < 0 || NY >= H)
             {
                 continue;
             }
 
-            if (map[ny][nx] == 1 && visited[ny][nx] == 0)
+            if (true == visited[NY][NX] || '.' == arr[NY][NX])
             {
-                visited[ny][nx] = true;
-                q.push(make_pair(ny, nx));
+                continue;
             }
+
+            visited[NY][NX] = true;
+            q.push({ NX, NY });
         }
     }
 }
 
-void reset() 
-{
-    for (int i = 0; i < MAX; i++) 
-    {
-        for (int j = 0; j < MAX; j++) 
-        {
-            map[i][j] = 0;
-            visited[i][j] = 0;
-        }
-    }
-    cnt = 0;
-}
-
-int main() 
+int main()
 {
     ios::sync_with_stdio(false);
     cin.tie(NULL); cout.tie(NULL);
 
+    int T = 0;
     cin >> T;
 
-    for (int t = 0; t < T; t++) 
+    while (T--)
     {
         cin >> H >> W;
-        char input[MAX][MAX];
 
-        for (int i = 0; i < H; i++)
+        for (int y = 0; y < H; ++y)
         {
-            for (int j = 0; j < W; j++)
+            for (int x = 0; x < W; ++x)
             {
-                cin >> input[i][j];
+                cin >> arr[y][x];
             }
         }
 
-        for (int i = 0; i < H; i++) 
+        int Count = 0;
+        for (int y = 0; y < H; ++y)
         {
-            for (int j = 0; j < W; j++) 
+            for (int x = 0; x < W; ++x)
             {
-                if (input[i][j] == '.')
+                if ('#' == arr[y][x] && false == visited[y][x])
                 {
-                    map[i][j] = 0;
-                }
-                if (input[i][j] == '#')
-                {
-                    map[i][j] = 1;
+                    BFS(x, y);
+                    ++Count;
                 }
             }
         }
-
-        for (int i = 0; i < H; i++) 
-        {
-            for (int j = 0; j < W; j++) 
-            {
-                if (map[i][j] == 1 && visited[i][j] == 0)
-                {
-                    BFS(i, j);
-                    cnt++;
-                }
-            }
-        }
-        ans[t] = cnt;
-
-        reset();
-    }
-
-    for (int i = 0; i < T; i++) 
-    {
-        cout << ans[i] << '\n';
+        cout << Count << '\n';
+        
+        memset(arr, ' ', sizeof(arr));
+        memset(visited, false, sizeof(visited));
     }
 
     return 0;
