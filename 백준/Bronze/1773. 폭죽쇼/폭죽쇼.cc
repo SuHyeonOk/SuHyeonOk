@@ -19,16 +19,15 @@ int main()
         int j = 1, Temp = Input;
         while (Temp <= C)
         {
-            if (false == arr[Input * j])
+            if (false == arr[Temp])
             {
-                arr[Input * j] = true;
+                arr[Temp] = true;
                 ++Count;
             }
             ++j;
             Temp = Input;
             Temp *= j;
         }
-
     }
 
     cout << Count;
