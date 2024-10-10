@@ -16,9 +16,12 @@ int main()
     {
         cin >> Input;
 
-        for (int j = Input; j <= C; j += Input)
+        if (false == visited[Input])
         {
-            visited[j] = true;
+            for (int j = Input; j <= C; j += Input)
+            {
+                visited[j] = true;
+            }
         }
     }
 
