@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-bool arr[2000001];
+bool visited[2000001];
 
 int main()
 {
@@ -11,18 +11,23 @@ int main()
     int N = 0, C = 0;
     cin >> N >> C;
 
-    int Input = 0, Count = 0;
+    int Input = 0;
     for (int i = 0; i < N; ++i)
     {
         cin >> Input;
 
         for (int j = Input; j <= C; j += Input)
         {
-            if (arr[j] == false)
-            {
-                arr[j] = true;
-                ++Count;
-            }
+            visited[j] = true;
+        }
+    }
+
+    int Count = 0;
+    for (int i = 1; i <= C; ++i)
+    {
+        if (visited[i] == true)
+        {
+            ++Count;
         }
     }
 
