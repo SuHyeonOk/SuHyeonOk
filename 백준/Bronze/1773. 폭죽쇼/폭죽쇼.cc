@@ -1,40 +1,37 @@
 #include <iostream>
-#include <cstring>
 using namespace std;
 
-int fire[2000001];
+bool arr[2000001];
 
 int main()
 {
-	int N = 0, C = 0;
-	int count = 0;
-	int student[100];
+    ios::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
 
-	cin >> N >> C;
+    int N = 0, C = 0;
+    cin >> N >> C;
 
-	for (int i = 0; i < N; ++i) 
+    int Input = 0, Count = 0;
+    for (int i = 0; i < N; ++i)
     {
-		cin >> student[i];
-	}
+        cin >> Input;
 
-	for (int i = 0; i < N; ++i) 
-    {
-		for (int j = student[i]; j <= C; j += student[i]) 
+        int j = 1, Temp = Input;
+        while (Temp <= C)
         {
-			fire[j] = 1;
-		}
-	}
+            if (false == arr[Input * j])
+            {
+                arr[Input * j] = true;
+                ++Count;
+            }
+            ++j;
+            Temp = Input;
+            Temp *= j;
+        }
 
-	for (int i = 0; i <= C; ++i) 
-    {
-		if (fire[i] == 1) 
-        {
-			++count;
-		}
-	}
+    }
 
-	cout << count << endl;
+    cout << Count;
 
-	return 0;
+    return 0;
 }
-
