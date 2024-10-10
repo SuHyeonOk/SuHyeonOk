@@ -19,7 +19,7 @@ int main()
         DP[i] = (DP[i - 1] + DP[i - 2]) % 15746;
     }
 
-    cout << DP[N] % 15746;
+    cout << DP[N];
 
     return 0;
 }
