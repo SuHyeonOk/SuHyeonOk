@@ -16,17 +16,13 @@ int main()
     {
         cin >> Input;
 
-        int j = 1, Temp = Input;
-        while (Temp <= C)
+        for (int j = Input; j <= C; j += Input)
         {
-            if (false == arr[Temp])
+            if (arr[j] == false)
             {
-                arr[Temp] = true;
+                arr[j] = true;
                 ++Count;
             }
-            ++j;
-            Temp = Input;
-            Temp *= j;
         }
     }
 
