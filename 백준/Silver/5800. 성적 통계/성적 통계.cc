@@ -1,38 +1,37 @@
 #include <iostream>
 #include <algorithm>
-#include <vector>
 using namespace std;
 
-int main() 
+int main()
 {
-    int k, n, st;
-    int MIN, MAX, ans;
-    vector<int> arr;
-    cin >> k;
-    
-    for (int i = 1; i <= k; i++)
+    ios::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
+
+    int K = 0;
+    cin >> K;
+
+    int arr[100]{ 0 };
+    int N = 0;
+    for (int i = 0; i < K; ++i)
     {
-        cin >> n;
-        arr.clear();
-        
-        for (int j = 0; j < n; j++)
+        cin >> N;
+
+        for (int j = 0; j < N; ++j)
         {
-            cin >> st;
-            arr.push_back(st);
+            cin >> arr[j];
         }
-        
-        sort(arr.begin(), arr.end());
-        MIN = arr[0];
-        MAX = arr[arr.size()-1];
-        ans = 0;
-        
-        for (int j = 1; j < n; j++)
+
+        sort(arr, arr + N, greater<int>());
+
+        int Max = 0;
+        for (int j = 1; j < N; ++j)
         {
-            ans = max(ans, arr[j]-arr[j-1]);
+            Max = max(Max, arr[j - 1] - arr[j]);
         }
-        
-        cout << "Class " << i << "\n" << "Max " << MAX << ", Min " << MIN << ", Largest gap " << ans << "\n";
+
+        cout << "Class " << i + 1 << '\n';
+        cout << "Max " << arr[0] << ", Min " << arr[N  -  1]<< ", Largest gap " << Max << '\n';
     }
-    
+
     return 0;
 }
