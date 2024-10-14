@@ -12,20 +12,22 @@ int main()
     bool visited[1001]{ false }; 
     for (int i = 2; i <= N; ++i)
     {
-        if (false == visited[i])
+        if (true == visited[i])
         {
-            for (int j = i; j <= N; j += i)
-            {
-                if (false == visited[j])
-                {
-                    visited[j] = true;  
-                    --K;
+            continue;
+        }
 
-                    if (K == 0)    
-                    {
-                        cout << j;
-                        return 0;
-                    }
+        for (int j = i; j <= N; j += i)
+        {
+            if (false == visited[j])
+            {
+                visited[j] = true;
+                --K;
+
+                if (K == 0)
+                {
+                    cout << j;
+                    return 0;
                 }
             }
         }
