@@ -1,50 +1,51 @@
 #include <iostream>
-#include <string>
-#include <sstream>
-#include <vector>
+#include <algorithm>
 using namespace std;
 
-int gcd(int a, int b) 
+int GCD(int a, int b)
 {
-    return !b ? a : gcd(b, a % b);
+    if (b == 0)
+    {
+        return a;
+    }
+
+    return GCD(b, a % b);
 }
 
-int main() 
+int main()
 {
     ios::sync_with_stdio(false);
     cin.tie(NULL); cout.tie(NULL);
 
-    int T = 0 ;
-    cin >> T;
-    cin.ignore();
-    
-    int Max = -1;
-    int temp = 0;
-    string Line = "";
-    string Num = "";
-    vector<int> vec;
-    
-    while (T--) 
+    int N = 0;
+    cin >> N;
+
+    int arr[100]{ 0 };
+    int M = 0, Index = 0, Max = 0;
+    while (N--)
     {
-        vec.clear();
-        Max = -1;
-
-        getline(cin, Line);
-        stringstream sstream(Line);
-        while (getline(sstream, Num, ' '))
+        while (cin >> M)
         {
-            vec.push_back(stoi(Num));
-        }
+            arr[Index] = M;
+            ++Index;
 
-        for (int i = 0; i < vec.size() - 1; ++i) 
-        {
-            for (int j = i + 1; j < vec.size(); ++j) 
+            if (cin.get() == '\n') 
             {
-                temp = gcd(vec[i], vec[j]);
-                Max = Max < temp ? temp : Max;
+                break;  // '\n'을 만나면 다음 줄로 이동
             }
         }
+        
+        for (int i = 0; i < Index; ++i)
+        {
+            for (int j = i + 1; j < Index; ++j)
+            {
+                Max = max(Max, GCD(arr[i], arr[j]));
+            }
+        }
+
         cout << Max << '\n';
+        Max = 0;
+        Index = 0;
     }
 
     return 0;
