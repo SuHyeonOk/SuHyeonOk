@@ -3,39 +3,35 @@
 #include <algorithm>
 using namespace std;
 
-int main() 
+int main()
 {
     ios::sync_with_stdio(false);
     cin.tie(NULL); cout.tie(NULL);
 
-    int N = 0, input = 0;
+    int N = 0;
     cin >> N;
 
-    vector<int> vec;
-    for (int i = 0; i < N; i++)
+    vector<int> vec(N);
+    for (int i = 0; i < N; ++i)
     {
-        cin >> input;
-        vec.push_back(input);
+        cin >> vec[i];
     }
-    sort(vec.begin(), vec.end(), greater<>());
+    sort(vec.begin(), vec.end(), greater<int>());
 
-    int i = 0;
-    while (true)
+    int Result = -1;
+    for (int i = 0; i < N - 2; ++i)
     {
-        if (vec[i] < vec[i + 1] + vec[i + 2]) 
+        int a = vec[i];
+        int b = vec[i + 1];
+        int c = vec[i + 2];
+        if (a + b > c && a + c > b && b + c > a)
         {
-            cout << vec[i] + vec[i + 1] + vec[i + 2] << '\n';
-            break;
-        }
-
-        i++;
-
-        if (i + 2 >= N) 
-        {
-            cout << -1 << '\n';
+            Result = a + b + c;
             break;
         }
     }
+
+    cout << Result;
 
     return 0;
 }
