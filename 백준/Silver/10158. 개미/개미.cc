@@ -9,53 +9,22 @@ int main()
 	int w = 0, h = 0, p = 0, q = 0, t = 0;
 	cin >> w >> h >> p >> q >> t;
 
-	bool pb = true, qb = true;
-	int pt = t % (2 * w);
-	int qt = t % (2 * h);
+	p += t;
+	q += t;
 
-	while (pt--) 
+	p %= (2 * w);
+	q %= (2 * h);
+
+	if (p > w)
 	{
-		if (p == w) 
-		{
-			pb = false;
-		}
-		else if (p == 0) 
-		{
-			pb = true;
-		}
-
-		if (pb)
-		{
-			p++;
-		}
-		else
-		{
-			p--;
-		}
+		p = 2 * w - p;
+	}
+	if (q > h)
+	{
+		q = 2 * h - q;
 	}
 
-	while (qt--) 
-	{
-		if (q == h) 
-		{
-			qb = false;
-		}
-		else if (q == 0) 
-		{
-			qb = true;
-		}
-
-		if (qb)
-		{
-			q++;
-		}
-		else
-		{
-			q--;
-		}
-	}
-
-	cout << p << " " << q;
+	cout << p << ' ' << q;
 
 	return 0;
 }
