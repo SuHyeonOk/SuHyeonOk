@@ -1,9 +1,8 @@
 #include <iostream>
 #include <map>
 #include <string>
-
 using namespace std;
-map<string, int> m;
+
 
 int main(void)
 {
@@ -13,17 +12,19 @@ int main(void)
 	cout << fixed;
 	cout.precision(4);
 
-	string str;
-	int N = 0;
+	float N = 0;
+	string Input = "";
+	map<string, float> m;
 
-	while (getline(cin, str))
+	while (getline(cin, Input))
 	{
-		N++;
-		m[str]++;
+		++N;
+		++m[Input];
 	}
-	for (auto it = m.begin(); it != m.end(); it++)
+
+	for (map<string, float>::iterator it = m.begin(); it != m.end(); it++)
 	{
-		cout << it->first << " " << (double)it->second / N * 100 << "\n";
+		cout << it->first << " " << it->second / N * 100.0f << '\n';
 	}
 
 	return 0;
