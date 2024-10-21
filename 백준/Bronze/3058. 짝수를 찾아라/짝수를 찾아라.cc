@@ -1,29 +1,33 @@
 #include <iostream>
+#include <algorithm>
 using namespace std;
 
-int main() 
+int main()
 {
-    int n,a[7],sum,min;
-    cin >> n;
-    
-    while (n--) 
+    ios::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
+
+    int T = 0;
+    cin >> T;
+
+    int Input = 0, Sum = 0, Min = 101;
+    while (T--)
     {
-        sum = 0;
-        min = 101;
-        for (int i = 0; i < 7; i++)
+        for (int i = 0; i < 7; ++i)
         {
-            cin >> a[i];
-            if (a[i] % 2 == 0)
+            cin >> Input;
+
+            if (Input % 2 == 0)
             {
-                sum += a[i];
-                if (a[i] < min)
-                {
-                    min = a[i];
-                }
+                Sum += Input;
+                Min = min(Min, Input);
             }
         }
-        cout << sum << ' ' << min<<'\n';
+
+        cout << Sum << ' ' << Min << '\n';
+        Sum = 0;
+        Min = 101;
     }
-    
+
     return 0;
 }
