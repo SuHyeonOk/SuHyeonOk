@@ -1,25 +1,24 @@
 #include <iostream>
 using namespace std;
 
-int main() 
+int main()
 {
-	ios_base::sync_with_stdio(0);
-	cin.tie(0); cout.tie(0);
+    ios::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
 
-	int dp[11] = { 0, };
-	int n; 
-    cin >> n;
-	
-	dp[1] = 0;
-	dp[2] = 1;
-	
-	for (int i = 3; i <= n; i++) 
+    int N = 0;
+    cin >> N;
+
+    int DP[11]{ 0 };
+    DP[1] = 0;
+    DP[2] = 1;
+
+    for (int i = 3; i <= N; i++) 
     {
-		int div = i / 2;
-		dp[i] = (div * (i - div)) + dp[div] + dp[i - div];
-	}
+        DP[i] = DP[i - 1] + (i - 1);
+    }
 
-	cout << dp[n] << '\n';
-    
+    cout << DP[N] << '\n';
+
     return 0;
 }
