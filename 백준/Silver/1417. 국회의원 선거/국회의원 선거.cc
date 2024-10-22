@@ -23,23 +23,13 @@ int main()
     }
 
     int Count = 0;
-    bool Find = true;
-    while (true == Find)
+    while (false == pq.empty() && pq.top() >= Dasom + Count)
     {
-        Find = false;
-        for (int i = 0; i < N; ++i)
-        {
-            if (Dasom + Count <= pq.top())
-            {
-               int Temp = pq.top();
-               pq.pop();
-               pq.push(--Temp);
-               ++Count;
-               Find = true;
-            }
-        }
+        int Temp = pq.top();
+        pq.pop();
+        pq.push(--Temp);
+        ++Count;
     }
-
     cout << Count;
 
     return 0;
