@@ -1,55 +1,124 @@
 #include <iostream>
-#include <queue>
+#include <string>
 using namespace std;
 
+class Queue 
+{
+private:
+    int* arr;
+    int capacity;
+    int front, rear;
+    int size;
 
-int N;
-int main(void) {
-	ios::sync_with_stdio(0);
-	cin.tie(0);
+public:
+    Queue(int n) 
+    {
+        capacity = n + 1;  // 배열 크기를 하나 더 크게 해서 원형 큐의 조건을 만족시킴
+        arr = new int[capacity];
+        front = 0;
+        rear = 0;
+        size = 0;
+    }
 
-	queue<int> myqueue;
-	string comm;
+    ~Queue() 
+    {
+        delete[] arr;
+    }
 
+    void push(int x) 
+    {
+        if ((rear + 1) % capacity == front) 
+        {
+            return; // 큐가 가득 찬 경우
+        }
+        arr[rear] = x;
+        rear = (rear + 1) % capacity;
+        size++;
+    }
 
-	cin >> N;
-	for (int i = 0; i < N; i++) {
-		cin >> comm;
-		if (comm == "push") {
-			int num;
-			cin >> num;
-			myqueue.push(num);
-		}
-		else if (comm == "pop") {
-			if (myqueue.empty()) {
-				cout << -1 << '\n';
-			}
-			else {
-				cout << myqueue.front() << '\n';
-				myqueue.pop();
-			}
-		}
-		else if (comm == "size") {
-			cout << myqueue.size() << '\n';
-		}
-		else if (comm == "empty") {
-			cout << (int)myqueue.empty() << '\n';
-		}
-		else if (comm == "front") {
-			if (myqueue.empty()) {
-				cout << -1 << '\n';
-			}
-			else {
-				cout << myqueue.front() << '\n';
-			}
-		}
-		else if (comm == "back") {
-			if (myqueue.empty()) {
-				cout << -1 << '\n';
-			}
-			else {
-				cout << myqueue.back() << '\n';
-			}
-		}
-	}
+    int pop() 
+    {
+        if (true == empty()) 
+        {
+            return -1;
+        }
+        int result = arr[front];
+        front = (front + 1) % capacity;
+        size--;
+        return result;
+    }
+
+    int getSize() 
+    {
+        return size;
+    }
+
+    bool empty() 
+    {
+        return front == rear;
+    }
+
+    int getFront() 
+    {
+        if (true == empty()) 
+        {
+            return -1;
+        }
+        return arr[front];
+    }
+
+    int getBack() 
+    {
+        if (true == empty()) 
+        {
+            return -1;
+        }
+        return arr[(rear - 1 + capacity) % capacity];
+    }
+};
+
+int main() 
+{
+    ios::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
+
+    int N = 0;
+    cin >> N;
+
+    Queue q(N);
+
+    while (N--) 
+    {
+        string Command;
+        cin >> Command;
+
+        if (Command == "push")
+        {
+            int x;
+            cin >> x;
+            q.push(x);
+        }
+        else if (Command == "pop")
+        {
+            cout << q.pop() << '\n';
+        }
+        else if (Command == "size") 
+        {
+            cout << q.getSize() << '\n';
+        }
+        else if (Command == "empty")
+        {
+            cout << q.empty() << '\n';
+        }
+        else if (Command == "front") 
+        {
+            cout << q.getFront() << '\n';
+        }
+        else if (Command == "back") 
+        {
+            cout << q.getBack() << '\n';
+        }
+    }
+
+    return 0;
 }
