@@ -1,72 +1,83 @@
 #include <iostream>
-#include <cmath>
+#include <vector>
 using namespace std;
-int road1[101][101];
-int road2[101][101];
-int n, l;
-int result = 0;
-void PassCnt(int road[][101]){
-    //가로 확인
-    for (int i = 0; i < n; i++){  
-        bool slope[101] = {0}; // 경사로 여부
-        bool possible = true; // 가능한 길인지 확인
-        for (int h = 0; h < n-1; h++){
-            if(abs(road[i][h]-road[i][h+1]) > 1){
-                // 1. 높이차가 1보다 크면 불가능한 길 
-                possible = false;
-                break;
+
+int N, L;
+vector<vector<int>> Map;
+
+bool CheckPath(vector<int>& Path)
+{
+    vector<bool> Used(N, false);
+    for (int i = 0; i < N - 1; i++)
+    {
+        if (Path[i] == Path[i + 1])
+        {
+            continue;
+        }
+        if (abs(Path[i] - Path[i + 1]) > 1)
+        {
+            return false;
+        }
+        if (Path[i] > Path[i + 1])
+        {
+            for (int j = i + 1; j <= i + L; j++)
+            {
+                if (j >= N || Path[j] != Path[i + 1] || Used[j])
+                {
+                    return false;
+                }
+                Used[j] = true;
             }
-            
-            // 2. 경사로를 위에서 아래로 설치 할 때
-            if(road[i][h] == road[i][h+1] + 1){
-                int cur_hight = road[i][h + 1];
-                for (int k = h+2; k < h+1+l; k++){
-                    if(k >= n || road[i][k] != cur_hight){
-                        //L만큼의 여유가 있는지 확인
-                        possible = false;
-                        break;
-                    }
+        }
+        else
+        {
+            for (int j = i; j > i - L; j--)
+            {
+                if (j < 0 || Path[j] != Path[i] || Used[j])
+                {
+                    return false;
                 }
-                if(possible){
-                    //경사로 설치하면 설치했다고 표시
-                    slope[h + l] = true;
-                }else{
-                    break;
-                }
+                Used[j] = true;
             }
- 
-            // 3. 경사로를 아래에서 위로 설치 할 때
-            if(road[i][h] == road[i][h+1] - 1){
-                int cur_hight = road[i][h];
-                for (int k = h; k > h - l; k--){
-                    if(k < 0 || road[i][k] != cur_hight || slope[k]){
-                        // L만큼의 여유와 경사로 설치 여부 확인
-                        possible = false;
-                        break;
-                    }
-                }
-                if(!possible){
-                    break;
-                }
-            }
-        }        
-        if(possible){
-            result++; // 길이면 카운트
         }
     }
+    return true;
 }
- 
-int main(){
-    cin >> n >> l; // 입력
-    for (int i = 0; i < n; i++){
-        for (int j = 0; j < n; j++){
-            cin >> road1[i][j]; // 가로로 가는 길 확인
-            road2[j][i] = road1[i][j]; // 세로로 가는 길 확인
+
+int main()
+{
+    cin >> N >> L;
+    Map = vector<vector<int>>(N, vector<int>(N));
+    
+    for (int i = 0; i < N; i++)
+    {
+        for (int j = 0; j < N; j++)
+        {
+            cin >> Map[i][j];
         }
     }
-    PassCnt(road1); // 가로로 가는 길 개수
-    PassCnt(road2); // 세로로 가는 길 개수
-    cout << result << endl;
- 
+    
+    int Result = 0;
+    
+    for (int i = 0; i < N; i++)
+    {
+        vector<int> RowPath = Map[i];
+        vector<int> ColPath(N);
+        for (int j = 0; j < N; j++)
+        {
+            ColPath[j] = Map[j][i];
+        }
+        
+        if (CheckPath(RowPath))
+        {
+            Result++;
+        }
+        if (CheckPath(ColPath))
+        {
+            Result++;
+        }
+    }
+    
+    cout << Result << endl;
     return 0;
 }
