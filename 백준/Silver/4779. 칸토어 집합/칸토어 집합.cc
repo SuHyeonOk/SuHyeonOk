@@ -1,38 +1,42 @@
 #include <iostream>
-#include <cmath>
+#include <string>
 using namespace std;
 
-void Cantor(int _n) 
-{
-	// N = 0 인 경우 "-" 출력
-	if (_n == 0) 
-	{
-		cout << "-";
-		return;
-	}
+// 재귀적으로 칸토어 집합을 구성하는 함수
+void CantorSet(string& str, int start, int length) {
+    if (length == 1) {
+        return; // 길이가 1이면 더 이상 처리할 필요가 없음
+    }
+    
+    int divide = length / 3;
 
-	// N번째 칸토어 집합 = N -1 번째 칸토어 집합을 2개 이은 것
-	// 사이에 공백이 N - 1번째 칸토어 집합의 사이즈만큼 있어야 함
-	Cantor(_n - 1);
-	int Size = pow(3, _n - 1);
-	for (int i = 0; i < Size; i++)
-	{
-		cout << ' ';
-	}
-	Cantor(_n - 1);
+    // 가운데 구간을 공백으로 설정
+    for (int i = start + divide; i < start + 2 * divide; ++i) {
+        str[i] = ' ';
+    }
+
+    // 왼쪽 부분과 오른쪽 부분에 대해 재귀적으로 함수 호출
+    CantorSet(str, start, divide); // 왼쪽
+    CantorSet(str, start + 2 * divide, divide); // 오른쪽
 }
 
-int main()
-{
-	ios::sync_with_stdio(false);
-	cin.tie(NULL); cout.tie(NULL);
+int main() {
+    int N;
+    while (cin >> N) {
+        int length = 1;
+        for (int i = 0; i < N; ++i) {
+            length *= 3;
+        }
 
-	int N = 0;
-	while (cin >> N) 
-	{
-		Cantor(N);
-		cout << '\n';
-	}
+        // 길이가 length인 문자열을 '-'로 초기화
+        string str(length, '-');
 
-	return 0;
+        // 칸토어 집합 생성
+        CantorSet(str, 0, length);
+
+        // 결과 출력
+        cout << str << endl;
+    }
+
+    return 0;
 }
