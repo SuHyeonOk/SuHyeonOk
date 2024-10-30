@@ -3,71 +3,74 @@ using namespace std;
 
 int main()
 {
-    int n,a,b;
-    cin>>n;
-    
-    for(int i=0;i<n;i++)
+    ios::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
+
+    int T = 0;
+    cin >> T;
+
+    int a = 0, b = 0;
+    while (T--)
     {
-        cin>>a>>b;
-        int na = 0; 
-        int nb = 0;
-            
-        if(a==0)
+        cin >> a >> b;
+
+        int Sum = 0;
+        if (0 == a)
         {
-            na=0;
+            Sum += 0;
         }
-        else if(a==1)
+        else if (1 >= a)
         {
-            na=5000000;
+            Sum += 5000000;
         }
-        else if(a<=3)
+        else if (3 >= a)
         {
-            na=3000000;
+            Sum += 3000000;
         }
-        else if(a<=6)
+        else if (6 >= a)
         {
-             na=2000000;
+            Sum += 2000000;
         }
-        else if(a<=10)
+        else if (10 >= a)
         {
-            na=500000;
+            Sum += 500000;
         }
-        else if(a<=15)
+        else if (15 >= a)
         {
-            na=300000;
+            Sum += 300000;
         }
-        else if(a<=21)
+        else if(21 >= a)
         {
-            na=100000;
+            Sum += 100000;
         }
-            
-        if(b==0)
+
+        if (0 == b)
         {
-            nb=0;
+            Sum += 0;
         }
-        else if(b==1)
+        else if (1 >= b)
         {
-            nb=5120000;
+            Sum += 5120000;
         }
-        else if(b<=3)
+        else if (3 >= b)
         {
-            nb=2560000;
+            Sum += 2560000;
         }
-        else if(b<=7)
+        else if (7 >= b)
         {
-            nb=1280000;
+            Sum += 1280000;
         }
-        else if(b<=15)
+        else if (15 >= b)
         {
-            nb=640000;
+            Sum += 640000;
         }
-        else if(b<=31)
+        else if(31 >= b)
         {
-            nb=320000;
+            Sum += 320000;
         }
-            
-        cout<<na+nb<<"\n";
+
+        cout << Sum << '\n';
     }
-    
+
     return 0;
 }
