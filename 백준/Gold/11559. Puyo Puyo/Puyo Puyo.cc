@@ -3,29 +3,29 @@
 #include <vector>
 using namespace std;
 
-char Arr[12][6];
-bool Visited[12][6];
-int Dx[4]{ 0, 0, -1, 1 };
-int Dy[4]{ -1, 1, 0, 0 };
+char arr[12][6];
+bool visited[12][6];
+int dx[4]{ 0, 0, -1, 1 };
+int dy[4]{ -1, 1, 0, 0 };
 
 // DFS를 사용한 Flood Fill
-int Dfs(int X, int Y, char Color, vector<pair<int, int>>& ToPop)
+int DFS(int X, int Y, char Color, vector<pair<int, int>>& pos)
 {
     int Count = 1;
-    Visited[Y][X] = true;
-    ToPop.push_back({ Y, X });
-    
+    visited[Y][X] = true;
+    pos.push_back({ Y, X });
+
     for (int i = 0; i < 4; ++i)
     {
-        int Nx = X + Dx[i];
-        int Ny = Y + Dy[i];
-        
-        if (Nx >= 0 && Nx < 6 && Ny >= 0 && Ny < 12 && !Visited[Ny][Nx] && Arr[Ny][Nx] == Color)
+        int Nx = X + dx[i];
+        int Ny = Y + dy[i];
+
+        if (Nx >= 0 && Nx < 6 && Ny >= 0 && Ny < 12 && !visited[Ny][Nx] && arr[Ny][Nx] == Color)
         {
-            Count += Dfs(Nx, Ny, Color, ToPop);
+            Count += DFS(Nx, Ny, Color, pos);
         }
     }
-    
+
     return Count;
 }
 
@@ -37,14 +37,15 @@ void MoveBlocks()
         int EmptyRow = 11; // 아래쪽에서부터 채워 나감
         for (int Y = 11; Y >= 0; --Y)
         {
-            if (Arr[Y][X] != '.')
+            if (arr[Y][X] != '.')
             {
-                Arr[EmptyRow--][X] = Arr[Y][X];
+                arr[EmptyRow--][X] = arr[Y][X];
             }
         }
+
         while (EmptyRow >= 0) // 나머지 위쪽은 빈 공간으로
         {
-            Arr[EmptyRow--][X] = '.';
+            arr[EmptyRow--][X] = '.';
         }
     }
 }
@@ -52,47 +53,43 @@ void MoveBlocks()
 int main()
 {
     ios::sync_with_stdio(false);
-    cin.tie(NULL);
-    cout.tie(NULL);
+    cin.tie(NULL); cout.tie(NULL);
 
     // 입력 처리
     for (int Y = 0; Y < 12; ++Y)
     {
         for (int X = 0; X < 6; ++X)
         {
-            cin >> Arr[Y][X];
+            cin >> arr[Y][X];
         }
     }
 
     int ChainCount = 0;
-
     while (true)
     {
         bool Exploded = false;
-        memset(Visited, false, sizeof(Visited));
+        memset(visited, false, sizeof(visited));
 
         for (int Y = 0; Y < 12; ++Y)
         {
             for (int X = 0; X < 6; ++X)
             {
-                if (Arr[Y][X] != '.' && !Visited[Y][X])
+                if (arr[Y][X] != '.' && false == visited[Y][X])
                 {
-                    vector<pair<int, int>> ToPop;
-                    int ConnectedBlocks = Dfs(X, Y, Arr[Y][X], ToPop);
-                    
-                    if (ConnectedBlocks >= 4)
+                    vector<pair<int, int>> pos;
+                    if (4 <= DFS(X, Y, arr[Y][X], pos))
                     {
                         Exploded = true;
-                        for (auto [Py, Px] : ToPop)
+                        for (pair<int, int>& P : pos)
                         {
-                            Arr[Py][Px] = '.';
+                            arr[P.first][P.second] = '.';
                         }
                     }
                 }
             }
         }
 
-        if (Exploded)
+        if (true == Exploded)
         {
             MoveBlocks();
             ++ChainCount;
@@ -104,5 +101,6 @@ int main()
     }
 
     cout << ChainCount;
+
     return 0;
 }
