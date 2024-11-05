@@ -1,41 +1,34 @@
 #include <iostream>
-#include <map>
-
 using namespace std;
 
 int main()
 {
-    int n;
-    cin>>n;
-    map<string,int> mp;
-    for(int i = 0;i<n;i++)
+    ios::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
+
+    int N = 0;
+    cin >> N;
+
+
+    string S = "";
+    int X = 0;
+    int arr[26]{ 0 };
+    while(N--)
     {
-        string s;
-        int a;
-        cin>>s>>a;
-        mp[s] += a;
+        cin >> S >> X;
+        arr[S[0] - 'A'] += X;
     }
 
-    bool answer = false;
-
-    if(mp["STRAWBERRY"] == 5)
+    for (int i = 0; i < 26; ++i)
     {
-        answer = true;
-    }
-    else if(mp["BANANA"] == 5)
-    {
-        answer = true;
-    }
-    else if(mp["LIME"] ==5)
-    {
-        answer = true;
-    }
-    else if(mp["PLUM"] == 5)
-    {
-        answer = true;
+        if (arr[i] == 5)
+        {
+            cout << "YES";
+            return 0;
+        }
     }
 
-    cout<< (answer ? "YES" : "NO")<<endl;
-    
+    cout << "NO";
+
     return 0;
 }
