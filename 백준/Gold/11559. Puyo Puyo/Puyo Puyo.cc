@@ -8,7 +8,7 @@ bool visited[12][6];
 int dx[4]{ 0, 0, -1, 1 };
 int dy[4]{ -1, 1, 0, 0 };
 
-// DFS를 사용한 Flood Fill
+// 연속된 블록의 개수 세기
 int DFS(int X, int Y, char Color, vector<pair<int, int>>& pos)
 {
     int Count = 1;
@@ -30,7 +30,7 @@ int DFS(int X, int Y, char Color, vector<pair<int, int>>& pos)
 }
 
 // 블록을 아래로 떨어뜨리는 함수
-void MoveBlocks()
+void Down()
 {
     for (int X = 0; X < 6; ++X)
     {
@@ -91,7 +91,7 @@ int main()
 
         if (true == Exploded)
         {
-            MoveBlocks();
+            Down();
             ++ChainCount;
         }
         else
