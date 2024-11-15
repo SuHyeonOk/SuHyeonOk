@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-int GCD(long long int a, long long int b)
+int GCD(long long a, long long b)
 {
     if (b == 0)
     {
@@ -13,7 +13,7 @@ int GCD(long long int a, long long int b)
 
 int main()
 {
-    long long int a = 0, b = 0;
+    long long a = 0, b = 0;
     cin >> a >> b;
 
     cout << (a * b) / GCD(a, b);
