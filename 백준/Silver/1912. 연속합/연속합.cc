@@ -3,7 +3,6 @@
 using namespace std;
 
 int arr[100000];
-int dp[100000];
 
 int main()
 {
@@ -18,12 +17,11 @@ int main()
         cin >> arr[i];
     }
 
-    int Max = arr[0];
-    dp[0] = arr[0];
+    int Max = arr[0], Sum = arr[0];
     for (int i = 1; i < N; ++i)
     {
-        dp[i] = max(arr[i], dp[i - 1] + arr[i]);
-        Max = max(Max, dp[i]);
+        Sum = max(arr[i], Sum + arr[i]);
+        Max = max(Max, Sum);
     }
     cout << Max;
 
