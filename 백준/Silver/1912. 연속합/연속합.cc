@@ -12,15 +12,14 @@ int main()
     int N = 0;
     cin >> N;
 
-    for (int i = 0; i < N; ++i)
-    {
-        cin >> arr[i];
-    }
+    int Input = 0;
+    cin >> Input;
 
-    int Max = arr[0], Sum = arr[0];
+    int Max = Input, Sum = Input;
     for (int i = 1; i < N; ++i)
     {
-        Sum = max(arr[i], Sum + arr[i]);
+        cin >> Input;
+        Sum = max(Input, Sum + Input);
         Max = max(Max, Sum);
     }
     cout << Max;
