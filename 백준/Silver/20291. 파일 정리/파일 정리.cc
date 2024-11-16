@@ -1,29 +1,29 @@
 #include <iostream>
-#include <string>
-#include <vector>
 #include <map>
 using namespace std;
 
-vector<string> fileNames;
-map<string, int> ex;
-
-int main() 
+int main()
 {
-    
-    int N;
+    ios::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
+
+    int N = 0;
     cin >> N;
-    for (int i=0; i<N; i++) 
+
+    string Input = "";
+    map<string, int> m;
+    for (int i = 0; i < N; ++i)
     {
-        string file;
-        cin >> file;
-        int dot = (int)file.find('.');
-        ex[file.substr(dot+1)]++;
+        cin >> Input;
+
+        string Temp = Input.substr(Input.find('.') + 1);
+        ++m[Temp];
     }
 
-    for (map<string, int>::iterator iter = ex.begin(); iter != ex.end(); iter++) 
+    for (auto file : m)
     {
-        cout << iter->first << " " << iter->second << "\n";
+        cout << file.first << ' ' << file.second << '\n';
     }
-    
+
     return 0;
 }
