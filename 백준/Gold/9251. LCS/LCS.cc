@@ -14,21 +14,20 @@ int main()
 
     int LengthA = A.length();
     int LengthB = B.length();
-    for (int i = 1; i <= LengthA; i++)
+    for (int i = 0; i < LengthA; i++)
     {
-        for (int j = 1; j <= LengthB; j++)
+        for (int j = 0; j < LengthB; j++)
         {
-            if (A[i - 1] == B[j - 1]) 
+            if (A[i] == B[j])
             {
-                dp[i][j] = dp[i - 1][j - 1] + 1;
+                dp[i + 1][j + 1] = dp[i][j] + 1;
             }
-            else 
+            else
             {
-                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
+                dp[i + 1][j + 1] = max(dp[i][j + 1], dp[i + 1][j]);
             }
         }
     }
-
     cout << dp[LengthA][LengthB];
 
     return 0;
