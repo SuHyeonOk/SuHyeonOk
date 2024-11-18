@@ -1,14 +1,13 @@
 #include<iostream>
 using namespace std;
 
-int N;
+int N, Min = 101;
 int arr[21][21];
 bool visited[22];
-int result = 101;
 
-void DFS(int _Count, int _Ne_Countt) // _Count는 카운트 수, _Ne_Countt는 다음 값
+void DFS(int _Depth, int _Next) // _Depth는 카운트 수, _Next는 다음 값
 {
-	if (_Count == N / 2) // 카운트수가 정원의 1/2이 됐을 때 능력치합 계산
+	if (_Depth == N / 2) // 카운트수가 정원의 1/2이 됐을 때 능력치합 계산
 	{
 		int Start = 0, Link = 0;
 
@@ -28,18 +27,18 @@ void DFS(int _Count, int _Ne_Countt) // _Count는 카운트 수, _Ne_Countt는 �
 		}
 
 		int Temp = abs(Start - Link);
-		if (result > Temp)
+		if (Min > Temp)
 		{
-			result = Temp;
+			Min = Temp;
 		}
 
 		return;
 	}
 
-	for (int i = _Ne_Countt; i < N; i++)
+	for (int i = _Next; i < N; i++)
 	{
 		visited[i] = true;
-		DFS(_Count + 1, i + 1);
+		DFS(_Depth + 1, i + 1);
 		visited[i] = false;
 	}
 }
@@ -60,6 +59,7 @@ int main()
 	}
 
 	DFS(0, 1); // 카운트 0회부터 숫자는 1부터 시작
+	cout << Min;
 
-	cout << result;
+	return 0;
 }
