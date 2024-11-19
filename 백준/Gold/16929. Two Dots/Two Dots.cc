@@ -18,7 +18,7 @@ void DFS(int _Y, int _X, int _Depth)
         int NX = _X + dx[i];
         int NY = _Y + dy[i];
 
-        if (_Depth >= 3 && NY == StartY && NX == StartX)
+        if (_Depth >= 4 && NY == StartY && NX == StartX)
         {
             Find = true;
             return;
@@ -63,7 +63,7 @@ int main()
             visited[y][x] = true;
             StartY = y;
             StartX = x;
-            DFS(y, x, 0);
+            DFS(y, x, 1);
             memset(visited, false, sizeof(visited));
 
             if (true == Find)
