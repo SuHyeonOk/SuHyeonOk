@@ -1,25 +1,69 @@
 #include <iostream>
-#include <vector>
-#include <string>
-#include <algorithm>
 using namespace std;
 
-int main() 
+typedef struct tagInformation
 {
-	ios_base::sync_with_stdio(0);
-	cin.tie(0);	cout.tie(0);
+    string Name = "";
+    int D = 0, M = 0, Y = 0;
+}INFO;
 
-	int n = 0;
-	cin >>n;
-	vector<pair<pair<int, int>,pair<int,string>>>name(n);
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
 
-	for (int i = 0; i < n; i++) 
+    int N = 0;
+    cin >> N;
+
+    INFO Info{ "", 0, 0, 0 };
+    INFO Max{ "", 0, 0, 0 }; // 가장 젊은
+    INFO Min{ "", 32, 13, 2011 }; // 가장 늙은 (모든 숫자가 가장 적은 경우)
+    for (int i = 0; i < N; ++i)
     {
-		cin >> name[i].second.second >> name[i].second.first >> name[i].first.second>>name[i].first.first;
-	}
-    
-	sort(name.begin(), name.end());
-	cout << name[n - 1].second.second << '\n' << name[0].second.second << '\n';
+        cin >> Info.Name >> Info.D >> Info.M >> Info.Y;
+
+        // 가장 늙은
+        if (Info.Y < Min.Y)
+        {
+            Min = Info;
+        }
+        else if (Info.Y == Min.Y)
+        {
+            if (Info.M < Min.M)
+            {
+                Min = Info;
+            }
+            else if (Info.M < Min.M)
+            {
+                if (Info.D < Min.D)
+                {
+                    Min = Info;
+                }
+            }
+        }
+
+        // 가장 젊은
+        if (Info.Y > Max.Y)
+        {
+            Max = Info;
+        }
+        else if (Info.Y == Max.Y)
+        {
+            if (Info.M > Max.M)
+            {
+                Max = Info;
+            }
+            else if (Info.M > Max.M)
+            {
+                if (Info.D > Max.D)
+                {
+                    Max = Info;
+                }
+            }
+        }
+    }
+
+    cout << Max.Name << '\n' << Min.Name;
 
     return 0;
 }
