@@ -9,7 +9,7 @@ int main()
 	int n, m;
 	cin >> n >> m;
 	int dp[41] = { 1,1,2 };
-	for (int i = 3; i <= 40; i++) 
+	for (int i = 3; i <= n; i++) 
 	{
 		dp[i] = dp[i - 1] + dp[i - 2];
 	}
@@ -24,7 +24,6 @@ int main()
 		idx = vip + 1;
 	}
 	answer *= dp[n + 1 - idx];
-
 	cout << answer;
 
 	return 0;
