@@ -1,47 +1,38 @@
 #include <iostream>
 #include <vector>
-#include <algorithm>
+#include <string>
 using namespace std;
 
-bool Descending(pair<string, float> a, pair<string, float> b) 
-{
-	return a.second > b.second;
-}
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(NULL); cout.tie(NULL);
 
-int main() 
-{
-	while (true) 
-    {
-		int N;
-		cin >> N;
+    int N;
+    while (cin >> N) {
+        if (N == 0) break;
 
-		if (N == 0) 
-        {
-			break;
-		}
+        vector<pair<string, string>> people;
+        string name, height;
+        string maxHeight = "0.0";
 
-		vector<pair<string, float>> v;
-		string name;
-		float height;
+        for (int i = 0; i < N; ++i) {
+            cin >> name >> height;
 
-		for (int i = 0; i < N; ++i) 
-        {
-			cin >> name >> height;
-			v.push_back({ name, height });
-		}
+            // 최대 높이를 문자열 비교로 갱신
+            if (height > maxHeight) {
+                maxHeight = height;
+            }
 
-		stable_sort(v.begin(), v.end(), Descending);
+            people.emplace_back(name, height);
+        }
 
-		for (int i = 0; i < N; ++i) 
-        {
-			if (v[i].second == v[0].second) 
-            {
-				cout << v[i].first << ' ';
-			}
-		}
-		cout << '\n';
+        for (const auto& person : people) {
+            if (person.second == maxHeight) { // 문자열로 최대값 비교
+                cout << person.first << " ";
+            }
+        }
+        cout << '\n';
+    }
 
-	}
-
-	return 0;
+    return 0;
 }
